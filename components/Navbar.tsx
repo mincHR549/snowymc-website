@@ -1,16 +1,22 @@
-import { motion } from "framer-motion";
-import type { HTMLMotionProps } from "framer-motion";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import ThemeToggle from "./ThemeToggle";
+"use client";
 
-const MotionNav = (props: HTMLMotionProps<"nav">) => <motion.nav {...props} />;
+import { motion, MotionProps } from "framer-motion";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import ThemeToggle from "./ThemeToggle";
+import React from "react";
+
+// ✅ 封装一个带类型的 MotionNav，解决 className 类型问题
+type MotionNavProps = MotionProps & React.HTMLAttributes<HTMLElement>;
+const MotionNav: React.FC<MotionNavProps> = (props) => <motion.nav {...props} />;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -32,6 +38,7 @@ export default function Navbar() {
                         : "bg-white/60 dark:bg-black/30 border-black/10 dark:border-white/20"
                     }`}
       >
+        {/* Logo */}
         <Link
           href="/"
           className="font-semibold tracking-tight text-black dark:text-white"
@@ -39,6 +46,7 @@ export default function Navbar() {
           SnowyMC
         </Link>
 
+        {/* 导航链接 */}
         <div className="flex items-center gap-5">
           <Link
             href="/about"
@@ -64,6 +72,8 @@ export default function Navbar() {
           >
             联系
           </Link>
+
+          {/* 主题切换按钮 */}
           <ThemeToggle />
         </div>
       </div>
