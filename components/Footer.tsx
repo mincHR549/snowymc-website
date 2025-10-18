@@ -1,15 +1,32 @@
+import { FaGithub, FaQq } from "react-icons/fa";
+
+
 export default function Footer() {
   return (
-    <footer className="backdrop-blur-xl bg-white/10 border-t border-white/20 text-white mt-24">
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <p className="text-sm">© {new Date().getFullYear()} SnowyMC 团队 — Powered by Vercel</p>
-          <div className="space-x-4 text-sm">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:underline">GitHub</a>
-            <a href="https://discord.com" target="_blank" rel="noreferrer" className="hover:underline">Discord</a>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:underline">Twitter</a>
-          </div>
+    <footer className="mt-24 pb-10">
+      <div className="mx-auto max-w-6xl px-6 py-8 rounded-2xl
+                      backdrop-blur-xl bg-white/60 border border-black/10
+                      dark:bg-black/30 dark:border-white/20 text-center">
+        
+        {/* 品牌标语 */}
+        <p className="text-gray-800 dark:text-white font-semibold mb-4">
+          SnowyMC — 技术与美学的交汇
+        </p>
+
+        {/* 社交按钮 */}
+        <div className="flex justify-center gap-6 text-2xl mb-4">
+          <a href="https://github.com/SnowyMCT" target="_blank" className="hover:text-gray-900 dark:hover:text-white">
+            <FaGithub />
+          </a>
+          <a href="https://qm.qq.com/q/wVbC2R3SsE" target="_blank" className="hover:text-blue-500">
+            <FaQq />
+          </a>
         </div>
+
+        {/* 版权信息 */}
+        <p className="text-sm text-gray-600 dark:text-white/60">
+          © {new Date().getFullYear()} SnowyMC. All rights reserved.
+        </p>
       </div>
     </footer>
   );

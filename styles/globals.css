@@ -2,22 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 动态渐变动画 */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 光晕浮动动画 */
+@keyframes float {
+  0%,100% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(12px,-12px,0); }
+}
+
+/* 全局高度 */
 html, body, #__next {
   height: 100%;
 }
 
+/* 字体渲染优化 */
 body {
-  background: #0b1020;
-  color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* 平滑滚动 */
 html {
   scroll-behavior: smooth;
+  overflow-y: scroll; /* 避免滚动条闪动 */
 }
 
+/* 文本选中效果（亮色/暗色模式） */
+:root {
+  --sel-bg: rgba(0, 0, 0, 0.12);
+  --sel-fg: #000;
+}
+.dark :root {
+  --sel-bg: rgba(255, 255, 255, 0.16);
+  --sel-fg: #fff;
+}
 ::selection {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: var(--sel-bg);
+  color: var(--sel-fg);
+}
+
+/* Tailwind 工具类扩展 */
+.animate-gradient { animation: gradient 16s ease-in-out infinite; }
+.bg-400% { background-size: 400% 400%; }
+.animate-float { animation: float 10s ease-in-out infinite; }
+
+/* 前景表面：让光晕能轻微影响文字和按钮 */
+.content-surface {
+  backdrop-filter: saturate(130%) contrast(105%) blur(1px);
+  -webkit-backdrop-filter: saturate(130%) contrast(105%) blur(1px);
 }
