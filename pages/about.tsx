@@ -68,7 +68,7 @@ export default function About() {
 
         <motion.div variants={container} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { name: "开发者 A", role: "插件开发 / NMS 适配" },
+            { name: "小浩", role: "插件开发 / NMS 适配" },
             { name: "美术 B", role: "像素立绘 / Logo / UI" },
             { name: "运维 C", role: "服务器与部署" },
           ].map((m) => (
