@@ -1,6 +1,9 @@
+// pages/projects.tsx
+"use client";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { motion } from "framer-motion";
+import { MotionDiv, MotionH2, MotionP } from "../components/motion-safe";
 
 const projects = [
   {
@@ -15,29 +18,23 @@ const projects = [
     tags: ["RPG", "可视化", "数据驱动"],
     link: "#",
   },
-//   {
-//     title: "SnowyAssets",
-//     desc: "标准化像素美术资源库：角色立绘、Logo、UI、表情差分。",
-//     tags: ["像素风", "标准化", "多场景适配"],
-//     link: "#",
-//   },
 ];
 
 const container = {
   hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1, 
-    transition: { staggerChildren: 0.2 } 
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 },
   },
 };
 const item = {
   hidden: { opacity: 0, y: 40, scale: 0.95, rotate: -2 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    scale: 1, 
-    rotate: 0, 
-    transition: { type: "spring", stiffness: 120, damping: 15 } 
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    rotate: 0,
+    transition: { type: "spring", stiffness: 120, damping: 15 },
   },
 };
 
@@ -48,17 +45,17 @@ export default function Projects() {
 
       <main className="max-w-6xl mx-auto pt-32 px-6">
         {/* 标题 */}
-        <motion.h2
+        <MotionH2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold mb-6 text-gray-800 dark:text-white drop-shadow-sm"
         >
           项目展示
-        </motion.h2>
+        </MotionH2>
 
         {/* 简介 */}
-        <motion.p
+        <MotionP
           className="mb-8 backdrop-blur-xl bg-white/90 dark:bg-black/40 
                      px-6 py-6 rounded-2xl border border-black/10 dark:border-white/20
                      text-gray-700 dark:text-white/80 shadow-md"
@@ -67,17 +64,17 @@ export default function Projects() {
           transition={{ delay: 0.2 }}
         >
           展示 SnowyMC 的核心项目与资源，强调性能、适配与美学统一。
-        </motion.p>
+        </MotionP>
 
         {/* 项目卡片 */}
-        <motion.div
+        <MotionDiv
           variants={container}
           initial="hidden"
           animate="visible"
           className="grid md:grid-cols-3 gap-6"
         >
           {projects.map((p) => (
-            <motion.div
+            <MotionDiv
               key={p.title}
               variants={item}
               whileHover={{ scale: 1.05, y: -5, rotate: 1, boxShadow: "0 12px 30px rgba(0,0,0,0.2)" }}
@@ -126,9 +123,9 @@ export default function Projects() {
               <div className="mt-4 h-1 w-0 group-hover:w-full transition-all 
                               bg-gradient-to-r from-cyan-300 via-violet-300 to-pink-300
                               dark:from-cyan-400 dark:via-violet-400 dark:to-pink-400 rounded"></div>
-            </motion.div>
+            </MotionDiv>
           ))}
-        </motion.div>
+        </MotionDiv>
       </main>
 
       <Footer />

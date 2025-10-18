@@ -1,8 +1,15 @@
 // pages/index.tsx
+"use client";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
+import {
+  MotionH1,
+  MotionDiv,
+  MotionP,
+  MotionDiv as MDiv, // alias if needed
+} from "../components/motion-safe";
 
 export default function Home() {
   return (
@@ -17,7 +24,7 @@ export default function Home() {
                         opacity-30 blur-3xl rounded-full pointer-events-none" />
 
         {/* 标题 */}
-        <motion.h1
+        <MotionH1
           initial={{ scale: 0.92, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -26,10 +33,10 @@ export default function Home() {
                      bg-clip-text text-transparent drop-shadow-sm"
         >
           SnowyMC
-        </motion.h1>
+        </MotionH1>
 
         {/* 打字机命令框 */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -51,10 +58,10 @@ export default function Home() {
             deleteSpeed={40}
             delaySpeed={2000}
           />
-        </motion.div>
+        </MotionDiv>
 
         {/* 简介段落 */}
-        <motion.p
+        <MotionP
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.7 }}
@@ -64,10 +71,10 @@ export default function Home() {
                      px-6 py-4 rounded-2xl border border-black/10 dark:border-white/20"
         >
           专注于 Minecraft 插件开发与像素美术创作，用技术与美学打造独特的游戏体验。
-        </motion.p>
+        </MotionP>
 
         {/* 按钮组 */}
-        <motion.div
+        <MotionDiv
           initial="hidden"
           animate="visible"
           variants={{
@@ -81,9 +88,8 @@ export default function Home() {
             { label: "美术资源", href: "/gallery" },
             { label: "加入我们", href: "/join" },
           ].map((btn, i) => (
-            <motion.a
+            <MotionDiv
               key={i}
-              href={btn.href}
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -99,9 +105,9 @@ export default function Home() {
                          before:-z-10"
             >
               {btn.label}
-            </motion.a>
+            </MotionDiv>
           ))}
-        </motion.div>
+        </MotionDiv>
 
         {/* 卡片区块 */}
         <section className="mt-16 grid w-full max-w-6xl grid-cols-1 md:grid-cols-3 gap-6 px-2">
@@ -110,7 +116,7 @@ export default function Home() {
             { title: "RPG 系统", desc: "任务、技能与装备的完整生态系统。" },
             { title: "像素美术库", desc: "标准化角色立绘、Logo 与表情差分资源。" },
           ].map((item) => (
-            <motion.div
+            <MotionDiv
               key={item.title}
               initial={{ opacity: 0, y: 40, scale: 0.95, rotate: -2 }}
               whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
@@ -131,7 +137,7 @@ export default function Home() {
               <div className="mt-4 h-1 w-0 group-hover:w-full transition-all
                               bg-gradient-to-r from-cyan-300 via-violet-300 to-pink-300
                               dark:from-cyan-400 dark:via-violet-400 dark:to-pink-400 rounded"></div>
-            </motion.div>
+            </MotionDiv>
           ))}
         </section>
       </main>

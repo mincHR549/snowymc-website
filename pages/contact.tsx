@@ -1,7 +1,10 @@
+// pages/contact.tsx
+"use client";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { motion } from "framer-motion";
 import { FaQq, FaDiscord, FaForumbee, FaGithub } from "react-icons/fa";
+import { MotionH2, MotionP, MotionDiv, MotionA } from "../components/motion-safe";
 
 export default function Contact() {
   return (
@@ -10,27 +13,27 @@ export default function Contact() {
 
       <main className="max-w-4xl mx-auto pt-32 px-6 text-center">
         {/* 标题 */}
-        <motion.h2
+        <MotionH2
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold mb-6 text-gray-800 dark:text-white drop-shadow-sm"
         >
           联系我们
-        </motion.h2>
+        </MotionH2>
 
         {/* 简介 */}
-        <motion.p
+        <MotionP
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
           className="mb-10 text-gray-700 dark:text-white/80"
         >
           欢迎加入 SnowyMC 社区！你可以通过以下方式找到我们：
-        </motion.p>
+        </MotionP>
 
         {/* 按钮组 */}
-        <motion.div
+        <MotionDiv
           initial="hidden"
           animate="visible"
           variants={{
@@ -55,14 +58,8 @@ export default function Contact() {
               label: "GitHub",
               icon: <FaGithub className="text-2xl" />,
             },
-            // 如果需要 Discord，取消注释
-            // {
-            //   href: "https://discord.gg/xxxx",
-            //   label: "加入 Discord",
-            //   icon: <FaDiscord className="text-2xl text-indigo-500" />,
-            // },
           ].map((btn, i) => (
-            <motion.a
+            <MotionA
               key={i}
               href={btn.href}
               target="_blank"
@@ -77,12 +74,12 @@ export default function Contact() {
             >
               {btn.icon}
               <span>{btn.label}</span>
-            </motion.a>
+            </MotionA>
           ))}
-        </motion.div>
+        </MotionDiv>
 
         {/* 额外介绍 */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -96,7 +93,7 @@ export default function Contact() {
             SnowyMC 致力于打造一个开放、友好的 Minecraft 创作社区。  
             无论你是开发者、美术师还是玩家，都能在这里找到归属感。
           </p>
-        </motion.div>
+        </MotionDiv>
       </main>
 
       <Footer />

@@ -1,6 +1,9 @@
+// pages/gallery.tsx
+"use client";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { motion } from "framer-motion";
+import { MotionDiv, MotionH2, MotionP, MotionImg } from "../components/motion-safe";
 
 const items = [
   { title: "角色立绘 #01", type: "立绘", image: "https://s21.ax1x.com/2025/10/19/pVLaHl6.jpg" },
@@ -13,9 +16,9 @@ const items = [
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1, 
-    transition: { staggerChildren: 0.2 } 
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 },
   },
 };
 const itemVariants = {
@@ -35,17 +38,17 @@ export default function Gallery() {
 
       <main className="max-w-6xl mx-auto pt-32 px-6">
         {/* 标题 */}
-        <motion.h2
+        <MotionH2
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold mb-6 text-gray-800 dark:text-white drop-shadow-sm"
         >
           美术资源
-        </motion.h2>
+        </MotionH2>
 
         {/* 简介 */}
-        <motion.p
+        <MotionP
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -54,17 +57,17 @@ export default function Gallery() {
                      text-gray-700 dark:text-white/80 shadow-md"
         >
           展示标准化的像素风格创作：支持透明背景、符号预留、风格统一与实际应用场景适配。
-        </motion.p>
+        </MotionP>
 
         {/* 资源卡片 */}
-        <motion.div
+        <MotionDiv
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           className="grid sm:grid-cols-2 md:grid-cols-3 gap-6"
         >
           {items.map((it, i) => (
-            <motion.div
+            <MotionDiv
               key={i}
               variants={itemVariants}
               whileHover={{ scale: 1.05, y: -5, rotate: 1 }}
@@ -75,7 +78,7 @@ export default function Gallery() {
             >
               {/* 图片展示 */}
               <div className="aspect-[4/3] overflow-hidden">
-                <img
+                <MotionImg
                   src={it.image}
                   alt={it.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -94,9 +97,9 @@ export default function Gallery() {
                               border-2 border-transparent 
                               group-hover:border-gradient-to-r 
                               group-hover:from-cyan-400 group-hover:to-pink-400" />
-            </motion.div>
+            </MotionDiv>
           ))}
-        </motion.div>
+        </MotionDiv>
       </main>
 
       <Footer />

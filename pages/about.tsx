@@ -1,12 +1,21 @@
+// pages/about.tsx
+"use client";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { motion } from "framer-motion";
+import {
+  MotionDiv,
+  MotionH2,
+  MotionH3,
+  MotionP,
+  MotionImg,
+} from "../components/motion-safe";
 
 const container = {
   hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1, 
-    transition: { staggerChildren: 0.2, type: "spring", stiffness: 120, damping: 15 } 
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2, type: "spring", stiffness: 120, damping: 15 },
   },
 };
 const item = {
@@ -21,17 +30,17 @@ export default function About() {
 
       <main className="max-w-6xl mx-auto pt-32 px-6">
         {/* 标题 */}
-        <motion.h2
+        <MotionH2
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold mb-6 text-gray-800 dark:text-white drop-shadow-sm"
         >
           关于 SnowyMC
-        </motion.h2>
+        </MotionH2>
 
         {/* 简介段落 */}
-        <motion.p
+        <MotionP
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -41,19 +50,19 @@ export default function About() {
         >
           SnowyMC 是一个聚焦 Minecraft 生态的创作团队。我们在高性能插件与像素风格美术上深耕，
           追求工程化与美学统一：以标准化、可扩展、兼容适配为原则，打造稳定而富有创意的作品。
-        </motion.p>
+        </MotionP>
 
         {/* 愿景与理念 */}
-        <motion.h3
+        <MotionH3
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
           className="text-2xl font-semibold mt-10 mb-4 text-gray-800 dark:text-white"
         >
           愿景与理念
-        </motion.h3>
+        </MotionH3>
 
-        <motion.div
+        <MotionDiv
           variants={container}
           initial="hidden"
           animate="visible"
@@ -64,7 +73,7 @@ export default function About() {
             "美术：统一风格与细节还原",
             "协作：开放共享，偏好宽松协议",
           ].map((text, i) => (
-            <motion.div
+            <MotionDiv
               key={i}
               variants={item}
               whileHover={{ scale: 1.05, y: -5, boxShadow: "0 8px 25px rgba(0,0,0,0.15)" }}
@@ -73,21 +82,21 @@ export default function About() {
                          text-gray-700 dark:text-white/80 transition"
             >
               {text}
-            </motion.div>
+            </MotionDiv>
           ))}
-        </motion.div>
+        </MotionDiv>
 
         {/* 团队成员 */}
-        <motion.h3
+        <MotionH3
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           className="text-2xl font-semibold mt-10 mb-4 text-gray-800 dark:text-white"
         >
           团队成员
-        </motion.h3>
+        </MotionH3>
 
-        <motion.div
+        <MotionDiv
           variants={container}
           initial="hidden"
           animate="visible"
@@ -101,7 +110,7 @@ export default function About() {
             { name: "阿龙", role: "还得那边不是海", avatar: "https://s21.ax1x.com/2025/10/19/pVLaHl6.jpg" },
             { name: "谦演", role: "小插件开发｜服务端搭建", avatar: "https://s21.ax1x.com/2025/10/19/pVLaWmF.jpg" }
           ].map((m) => (
-            <motion.div
+            <MotionDiv
               key={m.name}
               variants={item}
               whileHover={{ scale: 1.05, y: -5, boxShadow: "0 10px 30px rgba(0,0,0,0.2)" }}
@@ -111,11 +120,10 @@ export default function About() {
             >
               {/* 头像 */}
               <div className="flex justify-center mb-4">
-                <img
+                <MotionImg
                   src={m.avatar}
                   alt={m.name}
                   className="w-20 h-20 rounded-full border-2 border-transparent 
-                             group-hover:border-gradient-to-r group-hover:from-cyan-400 group-hover:to-pink-400
                              object-cover shadow-md transition"
                 />
               </div>
@@ -127,9 +135,9 @@ export default function About() {
               <div className="mt-1 text-sm text-gray-700 dark:text-white/80 text-center">
                 {m.role}
               </div>
-            </motion.div>
+            </MotionDiv>
           ))}
-        </motion.div>
+        </MotionDiv>
       </main>
 
       <Footer />
