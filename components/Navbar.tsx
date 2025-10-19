@@ -37,7 +37,7 @@ export default function Navbar() {
     >
       <div
         className={`relative mx-auto max-w-6xl rounded-2xl mt-3 overflow-hidden border
-                    transition-all duration-300 backdrop-blur-2xl
+                    transition-all duration-300 backdrop-blur-md
                     ${
                       scrolled
                         ? "bg-white/28 dark:bg-black/28 border-white/35 dark:border-white/12 shadow-[0_10px_30px_rgba(0,0,0,0.20)]"
