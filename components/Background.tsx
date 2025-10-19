@@ -1,43 +1,38 @@
 export default function Background() {
   return (
     <div className="absolute inset-0 -z-20 overflow-hidden">
-      {/* 🌈 1️⃣ 柔和动态渐变层 */}
-      <div
-        className="absolute inset-0 bg-[length:300%_300%]
-                   bg-gradient-to-r from-pink-300 via-violet-300 to-cyan-300
-                   dark:from-[#0f172a] dark:via-[#312e81] dark:to-[#0f172a]
-                   animate-gradient-x"
-      ></div>
+      {/* 1. 动态渐变层 */}
+      <div className="absolute inset-0 bg-gradient-to-r from-pink-300 via-purple-300 to-cyan-300 
+                      bg-400% animate-gradient dark:hidden"></div>
 
-      {/* 🌫️ 2️⃣ 半透明雾面层 */}
-      <div
-        className="absolute inset-0 bg-white/70 dark:bg-black/40 
-                   backdrop-blur-[2px] dark:backdrop-blur-[2px]
-                   will-change-[backdrop-filter,opacity]"
-      ></div>
+      {/* 暗色模式下的动态渐变 */}
+      <div className="hidden dark:block absolute inset-0 
+                bg-gradient-to-r from-slate-800 via-violet-700 to-zinc-800
+                bg-400% animate-gradient opacity-70"></div>
 
-      {/* 💫 3️⃣ 柔光漂浮层 */}
-      <div className="absolute inset-0 pointer-events-none opacity-80 dark:opacity-60">
-        <div
-          className="absolute top-[15%] left-[10%] w-[38vmax] h-[38vmax]
-                     rounded-full bg-pink-300/40 dark:bg-pink-500/25
-                     blur-3xl animate-float-slow mix-blend-screen"
-        ></div>
+      {/* 2. 半透明背景层 */}
+      <div className="absolute inset-0 bg-white/75 backdrop-blur-sm 
+                dark:bg-black/40 dark:backdrop-blur-sm"></div>
 
-        <div
-          className="absolute bottom-[10%] right-[8%] w-[36vmax] h-[36vmax]
-                     rounded-full bg-cyan-300/40 dark:bg-cyan-400/20
-                     blur-3xl animate-float-slower mix-blend-screen"
-          style={{ animationDelay: "2.5s" }}
-        ></div>
+      {/* 3. 光晕层 */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-20 left-16 w-[42vmax] h-[42vmax] 
+                        rounded-full blur-3xl animate-float
+                        bg-pink-300/50 mix-blend-multiply 
+                        dark:bg-pink-500/30 dark:mix-blend-screen"></div>
 
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                     w-[40vmax] h-[40vmax] rounded-full
-                     bg-violet-300/35 dark:bg-violet-500/20
-                     blur-3xl animate-float-slowest mix-blend-screen"
-          style={{ animationDelay: "4s" }}
-        ></div>
+        <div className="absolute bottom-24 right-16 w-[38vmax] h-[38vmax] 
+                        rounded-full blur-3xl animate-float
+                        bg-cyan-300/50 mix-blend-multiply 
+                        dark:bg-cyan-400/25 dark:mix-blend-screen"
+             style={{ animationDelay: "0.6s" }}></div>
+
+        <div className="absolute top-1/2 left-1/2 w-[34vmax] h-[34vmax] 
+                        -translate-x-1/2 -translate-y-1/2 
+                        rounded-full blur-3xl animate-float
+                        bg-purple-300/40 mix-blend-multiply 
+                        dark:bg-violet-500/25 dark:mix-blend-screen"
+             style={{ animationDelay: "1.2s" }}></div>
       </div>
     </div>
   );
