@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-import { MotionDiv, MotionNav } from "./motion-safe"; // ✅ 使用你的 motion-safe 封装
+import { MotionDiv, MotionNav } from "./motion-safe"; // ✅ 调用安全封装
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -35,7 +35,6 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="fixed top-0 left-0 w-full z-50"
     >
-      {/* 外层容器：背景层常驻，内容层淡入 */}
       <div
         className={`relative mx-auto max-w-6xl rounded-2xl mt-3 overflow-hidden border
                     transition-all duration-300 backdrop-blur-2xl
@@ -45,7 +44,7 @@ export default function Navbar() {
                         : "bg-gradient-to-r from-white/18 via-white/10 to-white/18 dark:from-black/22 dark:via-black/14 dark:to-black/22 border-white/28 dark:border-white/12 shadow-[0_10px_24px_rgba(0,0,0,0.18)]"
                     }`}
       >
-        {/* 背景层：超级细微的流动光晕 */}
+        {/* 背景层 */}
         <MotionDiv aria-hidden className="pointer-events-none absolute inset-0">
           <MotionDiv
             initial={{ x: -20, y: -10, opacity: 0.2 }}
@@ -69,24 +68,15 @@ export default function Navbar() {
             className="absolute -bottom-14 -right-20 w-64 h-64 rounded-full
                        bg-gradient-to-tr from-pink-400/10 via-violet-400/10 to-cyan-400/10 blur-2xl"
           />
-          {/* 轻薄渐变膜层（极轻） */}
-          <MotionDiv
-            initial={{ opacity: 0.06 }}
-            animate={{ opacity: [0.05, 0.07, 0.06, 0.05] }}
-            transition={{ duration: 16, ease: "easeInOut", repeat: Infinity }}
-            className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_20%_20%,rgba(255,255,255,0.06),transparent_60%)]
-                       dark:bg-[radial-gradient(1200px_600px_at_20%_20%,rgba(255,255,255,0.04),transparent_60%)]"
-          />
         </MotionDiv>
 
-        {/* 内容层：淡入，保持毛玻璃一直可见 */}
+        {/* 内容层 */}
         <MotionDiv
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.15 }}
           className="flex items-center justify-between px-6 py-3 relative"
         >
-          {/* Logo + 品牌名 */}
           <Link
             href="/"
             className="flex items-center gap-2 font-semibold tracking-tight text-black dark:text-white hover:scale-105 transition-transform"
@@ -95,7 +85,6 @@ export default function Navbar() {
             <span>SnowyMC</span>
           </Link>
 
-          {/* 桌面端导航 */}
           <div className="hidden md:flex items-center gap-6 relative">
             {navLinks.map((link) => {
               const isActive = router.pathname === link.href;
@@ -119,7 +108,6 @@ export default function Navbar() {
             <ThemeToggle />
           </div>
 
-          {/* 移动端汉堡按钮 */}
           <button
             className="md:hidden text-2xl text-black dark:text-white"
             onClick={() => setMenuOpen((v) => !v)}
@@ -130,7 +118,7 @@ export default function Navbar() {
         </MotionDiv>
       </div>
 
-      {/* 移动端菜单：AnimatePresence + 背景层常驻 + 内容层淡入淡出 */}
+      {/* 移动端菜单 */}
       <AnimatePresence>
         {menuOpen && (
           <MotionDiv
@@ -147,31 +135,6 @@ export default function Navbar() {
                          dark:from-black/24 dark:via-black/16 dark:to-black/24
                          border-white/26 dark:border-white/12 shadow-[0_10px_28px_rgba(0,0,0,0.22)]"
             >
-              <MotionDiv aria-hidden className="pointer-events-none absolute inset-0">
-                <MotionDiv
-                  initial={{ x: -8, y: -6, opacity: 0.18 }}
-                  animate={{
-                    x: [-8, 4, -6, -8],
-                    y: [-6, -2, -8, -6],
-                    opacity: [0.16, 0.2, 0.18, 0.16],
-                  }}
-                  transition={{ duration: 16, ease: "easeInOut", repeat: Infinity }}
-                  className="absolute -top-10 -left-14 w-48 h-48 rounded-full
-                             bg-gradient-to-tr from-cyan-400/10 via-violet-400/10 to-pink-400/10 blur-xl"
-                />
-                <MotionDiv
-                  initial={{ x: 6, y: 8, opacity: 0.16 }}
-                  animate={{
-                    x: [6, -4, 8, 6],
-                    y: [8, 10, 6, 8],
-                    opacity: [0.14, 0.18, 0.16, 0.14],
-                  }}
-                  transition={{ duration: 18, ease: "easeInOut", repeat: Infinity }}
-                  className="absolute -bottom-12 -right-16 w-52 h-52 rounded-full
-                             bg-gradient-to-tr from-pink-400/10 via-violet-400/10 to-cyan-400/10 blur-xl"
-                />
-              </MotionDiv>
-
               <MotionDiv
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
