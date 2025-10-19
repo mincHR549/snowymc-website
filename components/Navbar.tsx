@@ -10,8 +10,8 @@ import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
 
 // 显式声明 Motion 组件，确保 TS 类型正确
-const MotionNav = motion("nav");
-const MotionDiv = motion("div");
+const MotionNav = motion.nav;
+const MotionDiv = motion.div;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
