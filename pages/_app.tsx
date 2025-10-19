@@ -40,7 +40,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             {/* 全局布局 */}
             <Navbar />
             <Component {...pageProps} />
-            <Footer />
           </div>
         </motion.div>
       </AnimatePresence>
