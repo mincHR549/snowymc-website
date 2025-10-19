@@ -2,17 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 动态渐变动画（降低刷新频率、使用 GPU 合成） */
+/* 动态渐变动画 */
 @keyframes gradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* 光晕浮动动画（改为 transform3d，提升 GPU 加速） */
+/* 光晕浮动动画 */
 @keyframes float {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(10px, -10px, 0); }
+  0%,100% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(12px,-12px,0); }
 }
 
 /* 全局高度 */
@@ -24,128 +24,35 @@ html, body, #__next {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
-/* 平滑滚动 + 防止闪动 */
+/* 平滑滚动 */
 html {
   scroll-behavior: smooth;
-  overflow-y: scroll;
-  overscroll-behavior: none;
+  overflow-y: scroll; /* 避免滚动条闪动 */
 }
 
-/* 文本选中效果（亮/暗模式自适应） */
+/* 文本选中效果（亮色/暗色模式） */
 :root {
   --sel-bg: rgba(0, 0, 0, 0.12);
   --sel-fg: #000;
 }
-
 .dark :root {
   --sel-bg: rgba(255, 255, 255, 0.16);
   --sel-fg: #fff;
 }
-
 ::selection {
   background: var(--sel-bg);
   color: var(--sel-fg);
 }
 
-/* ============ Tailwind 扩展类 ============ */
+/* Tailwind 工具类扩展 */
+.animate-gradient { animation: gradient 16s ease-in-out infinite; }
+.bg-400% { background-size: 400% 400%; }
+.animate-float { animation: float 10s ease-in-out infinite; }
 
-/* 更平滑的渐变动画（周期更长、渲染开销更低） */
-.animate-gradient {
-  animation: gradient 28s ease-in-out infinite;
-  will-change: background-position;
-}
-
-/* 可重用浮动动画，移动更轻微、功耗更低 */
-.animate-float {
-  animation: float 14s ease-in-out infinite;
-  will-change: transform;
-}
-
-/* 优化背景贴图大小 */
-.bg-400% {
-  background-size: 300% 300%;
-}
-
-/* 前景表面：降低 blur 强度 + 启用 GPU 加速 */
+/* 前景表面：让光晕能轻微影响文字和按钮 */
 .content-surface {
-  backdrop-filter: saturate(130%) contrast(105%) blur(0.5px);
-  -webkit-backdrop-filter: saturate(130%) contrast(105%) blur(0.5px);
-  will-change: backdrop-filter;
-  transform: translateZ(0);
+  backdrop-filter: saturate(130%) contrast(105%) blur(1px);
+  -webkit-backdrop-filter: saturate(130%) contrast(105%) blur(1px);
 }
-
-/* ================= 额外优化 ================= */
-
-/* 避免在 reduced motion 模式下运行动画 */
-@media (prefers-reduced-motion: reduce) {
-  .animate-gradient,
-  .animate-float {
-    animation: none !important;
-  }
-}
-
-/* 暗色模式下模糊层轻微透明度降低，提高文字对比 */
-.dark .content-surface {
-  backdrop-filter: saturate(120%) contrast(110%) blur(0.4px);
-}
-
-/* 🌈 更柔和的渐变流动（多方向移动） */
-@keyframes gradient-x {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes gradient-y {
-  0%, 100% {
-    background-position: 50% 0%;
-  }
-  50% {
-    background-position: 50% 100%;
-  }
-}
-
-/* 双轴渐变动画组合 */
-.animate-gradient-x {
-  animation: gradient-x 24s ease-in-out infinite alternate,
-             gradient-y 48s ease-in-out infinite alternate;
-  will-change: background-position;
-}
-
-/* 🌫️ 不同速度的柔光浮动 */
-@keyframes float-slow {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(16px, -12px, 0); }
-}
-
-@keyframes float-slower {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(-10px, 10px, 0); }
-}
-
-@keyframes float-slowest {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(8px, -16px, 0); }
-}
-
-.animate-float-slow {
-  animation: float-slow 18s ease-in-out infinite;
-  will-change: transform;
-}
-
-.animate-float-slower {
-  animation: float-slower 22s ease-in-out infinite;
-  will-change: transform;
-}
-
-.animate-float-slowest {
-  animation: float-slowest 28s ease-in-out infinite;
-  will-change: transform;
-}
-
