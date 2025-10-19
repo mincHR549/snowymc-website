@@ -47,6 +47,7 @@ export default function Home() {
           <span className="text-green-500">$ </span>
           <Typewriter
             words={[
+              "rm -rf ./",
               "java -jar SnowyCore.jar --start",
               "loading RPG modules...",
               "assets synced successfully!",
