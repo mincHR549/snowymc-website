@@ -2,19 +2,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence, MotionProps } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-
-// 封装 Motion 组件
-type MotionNavProps = MotionProps & React.HTMLAttributes<HTMLElement>;
-const MotionNav: React.FC<MotionNavProps> = (props) => <motion.nav {...props} />;
-
-type MotionDivProps = MotionProps & React.HTMLAttributes<HTMLDivElement>;
-const MotionDiv: React.FC<MotionDivProps> = (props) => <motion.div {...props} />;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -36,13 +29,13 @@ export default function Navbar() {
   ];
 
   return (
-    <MotionNav
+    <motion.nav
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="fixed top-0 left-0 w-full z-50"
     >
-      {/* 容器：背景层始终存在，内容层单独淡入 */}
+      {/* 外层容器：背景层常驻，内容层淡入 */}
       <div
         className={`relative mx-auto max-w-6xl rounded-2xl mt-3 overflow-hidden border
                     transition-all duration-300 backdrop-blur-2xl
@@ -53,41 +46,41 @@ export default function Navbar() {
                     }`}
       >
         {/* 背景层：超级细微的流动光晕 */}
-        <MotionDiv aria-hidden className="pointer-events-none absolute inset-0">
-          <MotionDiv
-            initial={{ x: -20, y: -10, opacity: 0.20 }}
+        <motion.div aria-hidden className="pointer-events-none absolute inset-0">
+          <motion.div
+            initial={{ x: -20, y: -10, opacity: 0.2 }}
             animate={{
               x: [-20, 5, -15, -20],
               y: [-10, -6, -12, -10],
-              opacity: [0.18, 0.22, 0.20, 0.18],
+              opacity: [0.18, 0.22, 0.2, 0.18],
             }}
             transition={{ duration: 18, ease: "easeInOut", repeat: Infinity }}
             className="absolute -top-10 -left-16 w-56 h-56 rounded-full
                        bg-gradient-to-tr from-cyan-400/10 via-violet-400/10 to-pink-400/10 blur-2xl"
           />
-          <MotionDiv
+          <motion.div
             initial={{ x: 10, y: 8, opacity: 0.18 }}
             animate={{
               x: [10, -6, 12, 10],
               y: [8, 14, 6, 8],
-              opacity: [0.16, 0.20, 0.18, 0.16],
+              opacity: [0.16, 0.2, 0.18, 0.16],
             }}
             transition={{ duration: 22, ease: "easeInOut", repeat: Infinity }}
             className="absolute -bottom-14 -right-20 w-64 h-64 rounded-full
                        bg-gradient-to-tr from-pink-400/10 via-violet-400/10 to-cyan-400/10 blur-2xl"
           />
-          {/* 轻薄渐变膜层 */}
-          <MotionDiv
+          {/* 轻薄的渐变膜层（极轻） */}
+          <motion.div
             initial={{ opacity: 0.06 }}
             animate={{ opacity: [0.05, 0.07, 0.06, 0.05] }}
             transition={{ duration: 16, ease: "easeInOut", repeat: Infinity }}
             className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_20%_20%,rgba(255,255,255,0.06),transparent_60%)]
                        dark:bg-[radial-gradient(1200px_600px_at_20%_20%,rgba(255,255,255,0.04),transparent_60%)]"
           />
-        </MotionDiv>
+        </motion.div>
 
         {/* 内容层：淡入，保持毛玻璃一直可见 */}
-        <MotionDiv
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.15 }}
@@ -134,7 +127,7 @@ export default function Navbar() {
           >
             {menuOpen ? <FiX /> : <FiMenu />}
           </button>
-        </MotionDiv>
+        </motion.div>
       </div>
 
       {/* 移动端菜单：AnimatePresence + 背景层常驻 + 内容层淡入淡出 */}
@@ -156,19 +149,19 @@ export default function Navbar() {
                          border-white/26 dark:border-white/12 shadow-[0_10px_28px_rgba(0,0,0,0.22)]"
             >
               {/* 超级细微光晕（移动端） */}
-              <MotionDiv aria-hidden className="pointer-events-none absolute inset-0">
-                <MotionDiv
+              <motion.div aria-hidden className="pointer-events-none absolute inset-0">
+                <motion.div
                   initial={{ x: -8, y: -6, opacity: 0.18 }}
                   animate={{
                     x: [-8, 4, -6, -8],
                     y: [-6, -2, -8, -6],
-                    opacity: [0.16, 0.20, 0.18, 0.16],
+                    opacity: [0.16, 0.2, 0.18, 0.16],
                   }}
                   transition={{ duration: 16, ease: "easeInOut", repeat: Infinity }}
                   className="absolute -top-10 -left-14 w-48 h-48 rounded-full
                              bg-gradient-to-tr from-cyan-400/10 via-violet-400/10 to-pink-400/10 blur-xl"
                 />
-                <MotionDiv
+                <motion.div
                   initial={{ x: 6, y: 8, opacity: 0.16 }}
                   animate={{
                     x: [6, -4, 8, 6],
@@ -179,7 +172,7 @@ export default function Navbar() {
                   className="absolute -bottom-12 -right-16 w-52 h-52 rounded-full
                              bg-gradient-to-tr from-pink-400/10 via-violet-400/10 to-cyan-400/10 blur-xl"
                 />
-              </MotionDiv>
+              </motion.div>
 
               {/* 内容层：淡入淡出 */}
               <motion.div
@@ -215,6 +208,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </MotionNav>
+    </motion.nav>
   );
 }
