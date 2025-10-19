@@ -102,9 +102,25 @@ export default function Home() {
           专注于 Minecraft 插件开发与像素美术创作，用技术与美学打造独特的游戏体验。
         </MotionP>
 
-        {/* 时间轴区块 */}
-        <section className="mt-20 max-w-4xl w-full relative">
-          <div className="border-l-2 border-cyan-400/30 dark:border-cyan-300/30 ml-4">
+        {/* 优化版时间轴 */}
+        <section className="mt-20 max-w-5xl w-full relative">
+          <div className="relative mx-auto">
+            {/* 中间竖线（背景线） */}
+            <div className="absolute left-1/2 top-0 h-full w-[2px] 
+                            bg-gray-300 dark:bg-gray-700 
+                            transform -translate-x-1/2"></div>
+
+            {/* 动态高亮线条 */}
+            <MotionDiv
+              initial={{ height: 0 }}
+              whileInView={{ height: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute left-1/2 top-0 w-[2px] 
+                         bg-gradient-to-b from-cyan-400 via-violet-400 to-pink-400 
+                         transform -translate-x-1/2"
+            />
+
             {[
               {
                 year: "2021",
@@ -129,21 +145,38 @@ export default function Home() {
             ].map((item, i) => (
               <MotionDiv
                 key={i}
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.2 }}
-                className="mb-12 ml-6 relative"
+                transition={{ duration: 0.6, delay: i * 0.3 }}
+                className={`mb-16 flex items-center w-full ${
+                  i % 2 === 0 ? "justify-start" : "justify-end"
+                }`}
               >
-                {/* 改良版时间点圆圈 */}
-                <span className="absolute -left-5 top-1 w-4 h-4 rounded-full 
-                                 border-2 border-cyan-400/60 dark:border-cyan-300/60 
-                                 bg-white/70 dark:bg-black/40 
-                                 shadow-[0_0_8px_rgba(34,211,238,0.5)]"></span>
-                <h3 className="text-xl font-bold text-gray-800 dark:text-white">
-                  {item.year} · {item.title}
-                </h3>
-                <p className="mt-2 text-gray-600 dark:text-white/70">{item.desc}</p>
+                {/* 时间点（带脉冲扩散动画） */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 
+                                rounded-full border-2 border-cyan-400/60 
+                                bg-white/70 dark:bg-black/40 
+                                shadow-[0_0_10px_rgba(34,211,238,0.6)] 
+                                flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
+                  {/* 脉冲扩散圈 */}
+                  <span className="absolute w-6 h-6 rounded-full border-2 border-cyan-400/40 animate-ping"></span>
+                </div>
+
+                {/* 信息卡片 */}
+                <div
+                  className={`relative w-[45%] p-6 rounded-2xl 
+                              backdrop-blur-xl bg-white/80 dark:bg-black/40 
+                              border border-black/10 dark:border-white/20 shadow-lg
+                              hover:scale-105 transition-transform duration-300
+                              ${i % 2 === 0 ? "ml-10 text-left" : "mr-10 text-right"}`}
+                >
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+                    {item.year} · {item.title}
+                  </h3>
+                  <p className="mt-2 text-gray-600 dark:text-white/70">{item.desc}</p>
+                </div>
               </MotionDiv>
             ))}
           </div>
@@ -162,20 +195,4 @@ export default function Home() {
           animate={{ x: [0, -25, 15, 0], y: [0, 15, -10, 0] }}
           transition={{ repeat: Infinity, duration: 25, ease: "easeInOut" }}
           className="absolute left-10 top-60 w-20 h-20 rounded-full 
-                     bg-gradient-to-tr from-pink-400 via-violet-400 to-cyan-400 
-                     blur-2xl opacity-50"
-        />
-
-        <MotionDiv
-          animate={{ x: [0, 20, -15, 0], y: [0, -10, 15, 0] }}
-          transition={{ repeat: Infinity, duration: 30, ease: "easeInOut" }}
-          className="absolute right-1/3 top-96 w-16 h-16 rounded-full 
-                     bg-gradient-to-tr from-violet-400 via-cyan-400 to-pink-400 
-                     blur-xl opacity-40"
-        />
-      </main>
-
-      <Footer />
-    </div>
-  );
-}
+                     bg-gradient-to-tr from-pink-
