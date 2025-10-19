@@ -1,6 +1,7 @@
 // pages/contact.tsx
 "use client";
 
+import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { FaQq, FaDiscord, FaForumbee, FaGithub } from "react-icons/fa";
@@ -8,16 +9,46 @@ import { MotionH2, MotionP, MotionDiv, MotionA } from "../components/motion-safe
 
 export default function Contact() {
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative overflow-hidden">
+      <Head>
+        <title>联系 SnowyMC - 社区与协作</title>
+        <meta
+          name="description"
+          content="加入 SnowyMC 社区，通过 QQ 群、论坛与 GitHub 与我们联系与协作。"
+        />
+        <meta
+          name="keywords"
+          content="SnowyMC, Minecraft, 插件, 社区, 联系, QQ, 论坛, GitHub"
+        />
+        <meta property="og:title" content="联系 SnowyMC" />
+        <meta
+          property="og:description"
+          content="通过 QQ、论坛与 GitHub 与 SnowyMC 团队建立联系。"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.snowymc.top/contact" />
+      </Head>
+
       <Navbar />
 
-      <main className="max-w-4xl mx-auto pt-32 px-6 text-center">
+      {/* 背景光晕 */}
+      <MotionDiv
+        initial={{ rotate: 0 }}
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
+        aria-hidden="true"
+        className="absolute top-[120px] left-1/2 -translate-x-1/2 w-[720px] h-[720px]
+                   rounded-full blur-3xl pointer-events-none
+                   bg-gradient-to-tr from-cyan-400/18 via-violet-400/18 to-pink-400/18"
+      />
+
+      <main className="relative max-w-4xl mx-auto pt-32 px-6 text-center">
         {/* 标题 */}
         <MotionH2
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl font-bold mb-6 text-gray-800 dark:text-white drop-shadow-sm"
+          className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white"
         >
           联系我们
         </MotionH2>
@@ -27,7 +58,9 @@ export default function Contact() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="mb-10 text-gray-700 dark:text-white/80"
+          className="mt-4 mb-10 text-gray-700 dark:text-white/80
+                     backdrop-blur-xl bg-white/85 dark:bg-black/40
+                     px-6 py-6 rounded-2xl border border-black/10 dark:border-white/15 shadow-sm"
         >
           欢迎加入 SnowyMC 社区！你可以通过以下方式找到我们：
         </MotionP>
@@ -38,65 +71,96 @@ export default function Contact() {
           animate="visible"
           variants={{
             hidden: { opacity: 0, y: 30 },
-            visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2 } },
+            visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.18 } },
           }}
           className="grid sm:grid-cols-2 gap-6"
+          role="list"
+          aria-label="联系方式列表"
         >
           {[
             {
               href: "https://qm.qq.com/q/wVbC2R3SsE",
               label: "加入QQ群",
-              icon: <FaQq className="text-2xl text-blue-500" />,
+              icon: <FaQq className="text-2xl text-blue-500" aria-hidden="true" />,
             },
             {
               href: "https://forum.snowymc.com",
               label: "访问论坛",
-              icon: <FaForumbee className="text-2xl text-yellow-500" />,
+              icon: <FaForumbee className="text-2xl text-yellow-500" aria-hidden="true" />,
             },
             {
               href: "https://github.com/SnowyMCT",
               label: "GitHub",
-              icon: <FaGithub className="text-2xl" />,
+              icon: <FaGithub className="text-2xl" aria-hidden="true" />,
             },
           ].map((btn, i) => (
             <MotionA
               key={i}
               href={btn.href}
               target="_blank"
+              rel="noopener noreferrer"
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              whileHover={{ scale: 1.05, boxShadow: "0 8px 25px rgba(0,0,0,0.15)" }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center gap-3 px-6 py-4 rounded-xl
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 10px 28px rgba(34,211,238,0.20)",
+              }}
+              whileTap={{ scale: 0.96 }}
+              className="group relative flex items-center justify-center gap-3 px-6 py-4 rounded-xl
                          backdrop-blur-xl bg-white/90 dark:bg-black/40
-                         border border-black/10 dark:border-white/20
                          text-gray-800 dark:text-white font-medium
-                         transition"
+                         border border-transparent transition
+                         before:absolute before:inset-0 before:rounded-xl
+                         before:p-[2px] before:bg-gradient-to-r
+                         before:from-cyan-400 before:via-violet-400 before:to-pink-400
+                         before:opacity-0 group-hover:before:opacity-100
+                         before:transition before:duration-500 before:-z-10
+                         shadow-md hover:shadow-[0_0_24px_rgba(34,211,238,0.35)]"
+              role="listitem"
+              aria-label={btn.label}
             >
               {btn.icon}
-              <span>{btn.label}</span>
+              <span className="relative z-[1]">{btn.label}</span>
             </MotionA>
           ))}
         </MotionDiv>
 
-        {/* 额外介绍 */}
+        {/* 社区介绍 */}
         <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-12 backdrop-blur-xl bg-white/90 dark:bg-black/40 
-                     p-6 rounded-2xl border border-black/10 dark:border-white/20 shadow-md"
+          transition={{ delay: 0.35 }}
+          className="mt-12 relative backdrop-blur-xl bg-white/90 dark:bg-black/40 
+                     p-6 rounded-2xl border border-transparent shadow-sm
+                     before:absolute before:inset-0 before:rounded-2xl
+                     before:p-[2px] before:bg-gradient-to-r
+                     before:from-cyan-400 before:via-violet-400 before:to-pink-400
+                     before:opacity-100 before:-z-10"
         >
-          <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+          <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
             我们的社区
           </h3>
           <p className="text-gray-700 dark:text-white/80">
             SnowyMC 致力于打造一个开放、友好的 Minecraft 创作社区。  
             无论你是开发者、美术师还是玩家，都能在这里找到归属感。
           </p>
+          <div
+            aria-hidden="true"
+            className="mt-6 h-[2px] w-full rounded-full
+                       bg-gradient-to-r from-cyan-300 via-violet-300 to-pink-300
+                       dark:from-cyan-400 dark:via-violet-400 dark:to-pink-400"
+          />
+          <MotionP
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="mt-4 text-sm text-gray-600 dark:text-white/60"
+          >
+            如果你认同我们的理念，欢迎参与讨论与贡献，一起把有趣的想法变成稳定的作品。
+          </MotionP>
         </MotionDiv>
       </main>
 
       <Footer />
     </div>
   );
-}
+        }
