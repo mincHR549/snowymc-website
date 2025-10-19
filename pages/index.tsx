@@ -110,10 +110,11 @@ export default function Home() {
             />
 
             {[
-              { year: "2021", title: "插件框架", desc: "高性能、可扩展的 Minecraft 插件基础框架。" },
-              { year: "2022", title: "RPG 系统", desc: "任务、技能与装备的完整生态系统。" },
-              { year: "2023", title: "像素美术库", desc: "标准化角色立绘、Logo 与表情差分资源。" },
-              { year: "2024", title: "未来规划", desc: "更多创新玩法与跨平台支持正在开发中。" },
+              { year: "2022年6月", title: "团队成立初", desc: "以 SnowyMC 为团队名称，一个只有三个人的团队成立了！" },
+              { year: "2023年8月", title: "服务器运营", desc: "从此时起 SnowCherry。服务器诞生了！" },
+              { year: "2024年3月", title: "经济大危机", desc: "因服务商设备问题 玩家跑了 钱没了..." },
+              { year: "2024年8月", title: "团队扩充中", desc: "团队规模扩展至 7 人！" },
+              { year: "2025年3月", title: "新项目立项", desc: "NewWorld - Online" },
             ].map((item, i) => (
               <MotionDiv
                 key={i}
