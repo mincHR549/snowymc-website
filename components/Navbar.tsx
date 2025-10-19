@@ -7,9 +7,13 @@ import ThemeToggle from "./ThemeToggle";
 import React from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 
-// 封装 MotionNav
+// ✅ 封装 MotionNav
 type MotionNavProps = MotionProps & React.HTMLAttributes<HTMLElement>;
 const MotionNav: React.FC<MotionNavProps> = (props) => <motion.nav {...props} />;
+
+// ✅ 封装 MotionDiv
+type MotionDivProps = MotionProps & React.HTMLAttributes<HTMLDivElement>;
+const MotionDiv: React.FC<MotionDivProps> = (props) => <motion.div {...props} />;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -81,7 +85,7 @@ export default function Navbar() {
 
       {/* 移动端菜单 */}
       {menuOpen && (
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
@@ -101,7 +105,7 @@ export default function Navbar() {
             ))}
             <ThemeToggle />
           </div>
-        </motion.div>
+        </MotionDiv>
       )}
     </MotionNav>
   );
