@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import React from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import { useRouter } from "next/router";
 
 // ✅ 封装 MotionNav
 type MotionNavProps = MotionProps & React.HTMLAttributes<HTMLElement>;
@@ -18,6 +19,7 @@ const MotionDiv: React.FC<MotionDivProps> = (props) => <motion.div {...props} />
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,16 +62,27 @@ export default function Navbar() {
         </Link>
 
         {/* 桌面端导航 */}
-        <div className="hidden md:flex items-center gap-5">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm text-black/80 hover:text-black transition dark:text-white/80 dark:hover:text-white"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <div className="hidden md:flex items-center gap-6 relative">
+          {navLinks.map((link) => {
+            const isActive = router.pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative text-sm transition ${
+                  isActive
+                    ? "text-cyan-500 dark:text-cyan-400 font-semibold"
+                    : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
+                }`}
+              >
+                {link.label}
+                {/* 渐变下划线 */}
+                {isActive && (
+                  <span className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400"></span>
+                )}
+              </Link>
+            );
+          })}
           <ThemeToggle />
         </div>
 
@@ -93,16 +106,26 @@ export default function Navbar() {
           className="md:hidden absolute top-[70px] left-0 w-full px-6"
         >
           <div className="flex flex-col gap-4 backdrop-blur-xl bg-white/90 dark:bg-black/60 rounded-2xl p-6 border border-black/10 dark:border-white/20 shadow-lg">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-base text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = router.pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`relative text-base transition ${
+                    isActive
+                      ? "text-cyan-500 dark:text-cyan-400 font-semibold"
+                      : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400"></span>
+                  )}
+                </Link>
+              );
+            })}
             <ThemeToggle />
           </div>
         </MotionDiv>
