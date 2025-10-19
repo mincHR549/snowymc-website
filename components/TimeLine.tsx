@@ -1,7 +1,6 @@
-// components/Timeline.tsx
 "use client";
 
-import { motion } from "framer-motion";
+import { MotionDiv } from "./motion-safe"; // ✅ 使用安全封装
 
 const events = [
   { year: "2022年6月", title: "团队成立初", desc: "以 SnowyMC 为团队名称，一个只有三个人的团队成立了！" },
@@ -18,7 +17,7 @@ export default function Timeline() {
       <div className="absolute top-0 left-4 md:left-1/2 transform md:-translate-x-1/2 w-[2px] h-full bg-gray-300 dark:bg-gray-700" />
 
       {events.map((item, i) => (
-        <motion.div
+        <MotionDiv
           key={i}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -57,7 +56,7 @@ export default function Timeline() {
               </div>
             )}
           </div>
-        </motion.div>
+        </MotionDiv>
       ))}
     </div>
   );
