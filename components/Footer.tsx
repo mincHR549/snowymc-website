@@ -3,13 +3,14 @@
 import { FaGithub, FaQq } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa6";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Footer() {
   const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowTop(window.scrollY > 200); // 滚动超过 200px 显示按钮
+      setShowTop(window.scrollY > 200);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -60,18 +61,28 @@ export default function Footer() {
         </p>
       </div>
 
-      {/* 返回顶部按钮 */}
-      {showTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-6 right-6 p-3 rounded-full 
-                     bg-gradient-to-r from-cyan-400 to-pink-400 
-                     text-white shadow-lg hover:scale-110 transition-transform"
-          aria-label="返回顶部"
-        >
-          <FaArrowUp />
-        </button>
-      )}
+      {/* 返回顶部按钮（带动画） */}
+      <AnimatePresence>
+        {showTop && (
+          <motion.button
+            key="back-to-top"
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 p-3 rounded-full
+                       bg-white/80 dark:bg-black/60
+                       border border-black/10 dark:border-white/20
+                       shadow-lg backdrop-blur-xl
+                       hover:scale-110 hover:shadow-[0_0_20px_rgba(34,211,238,0.35)]
+                       transition-transform"
+            aria-label="返回顶部"
+          >
+            <FaArrowUp className="text-cyan-500 dark:text-cyan-400" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </footer>
   );
 }
