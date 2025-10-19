@@ -1,13 +1,12 @@
-// components/motion-safe.tsx
 "use client";
 
 import React from "react";
 import { motion, MotionProps } from "framer-motion";
 
 /**
+ * motion-safe.tsx
  * 为常用 HTML 标签创建类型安全的 motion 组件。
- * 这样可以避免 framer-motion@10+ 的类型不自动
- * 继承 className / HTMLAttributes 的问题。
+ * 解决 Framer Motion v10+ 在严格 TypeScript 下不识别 className 等属性的问题。
  */
 
 export type MotionDivProps = MotionProps & React.HTMLAttributes<HTMLDivElement>;
@@ -33,3 +32,7 @@ export const MotionA: React.FC<MotionAProps> = (props) => <motion.a {...props} /
 
 export type MotionImgProps = MotionProps & React.ImgHTMLAttributes<HTMLImageElement>;
 export const MotionImg: React.FC<MotionImgProps> = (props) => <motion.img {...props} />;
+
+// ✅ 新增：类型安全的 MotionNav
+export type MotionNavProps = MotionProps & React.HTMLAttributes<HTMLElement>;
+export const MotionNav: React.FC<MotionNavProps> = (props) => <motion.nav {...props} />;
