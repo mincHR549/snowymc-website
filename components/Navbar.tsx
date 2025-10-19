@@ -9,6 +9,10 @@ import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
 
+// 显式声明 Motion 组件，确保 TS 类型正确
+const MotionNav = motion("nav");
+const MotionDiv = motion("div");
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,7 +33,7 @@ export default function Navbar() {
   ];
 
   return (
-    <motion.nav
+    <MotionNav
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
@@ -46,8 +50,8 @@ export default function Navbar() {
                     }`}
       >
         {/* 背景层：超级细微的流动光晕 */}
-        <motion.div aria-hidden className="pointer-events-none absolute inset-0">
-          <motion.div
+        <MotionDiv aria-hidden className="pointer-events-none absolute inset-0">
+          <MotionDiv
             initial={{ x: -20, y: -10, opacity: 0.2 }}
             animate={{
               x: [-20, 5, -15, -20],
@@ -58,7 +62,7 @@ export default function Navbar() {
             className="absolute -top-10 -left-16 w-56 h-56 rounded-full
                        bg-gradient-to-tr from-cyan-400/10 via-violet-400/10 to-pink-400/10 blur-2xl"
           />
-          <motion.div
+          <MotionDiv
             initial={{ x: 10, y: 8, opacity: 0.18 }}
             animate={{
               x: [10, -6, 12, 10],
@@ -69,18 +73,18 @@ export default function Navbar() {
             className="absolute -bottom-14 -right-20 w-64 h-64 rounded-full
                        bg-gradient-to-tr from-pink-400/10 via-violet-400/10 to-cyan-400/10 blur-2xl"
           />
-          {/* 轻薄的渐变膜层（极轻） */}
-          <motion.div
+          {/* 轻薄渐变膜层（极轻） */}
+          <MotionDiv
             initial={{ opacity: 0.06 }}
             animate={{ opacity: [0.05, 0.07, 0.06, 0.05] }}
             transition={{ duration: 16, ease: "easeInOut", repeat: Infinity }}
             className="absolute inset-0 bg-[radial-gradient(1200px_600px_at_20%_20%,rgba(255,255,255,0.06),transparent_60%)]
                        dark:bg-[radial-gradient(1200px_600px_at_20%_20%,rgba(255,255,255,0.04),transparent_60%)]"
           />
-        </motion.div>
+        </MotionDiv>
 
         {/* 内容层：淡入，保持毛玻璃一直可见 */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.15 }}
@@ -127,13 +131,13 @@ export default function Navbar() {
           >
             {menuOpen ? <FiX /> : <FiMenu />}
           </button>
-        </motion.div>
+        </MotionDiv>
       </div>
 
       {/* 移动端菜单：AnimatePresence + 背景层常驻 + 内容层淡入淡出 */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
+          <MotionDiv
             key="mobile-menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -149,8 +153,8 @@ export default function Navbar() {
                          border-white/26 dark:border-white/12 shadow-[0_10px_28px_rgba(0,0,0,0.22)]"
             >
               {/* 超级细微光晕（移动端） */}
-              <motion.div aria-hidden className="pointer-events-none absolute inset-0">
-                <motion.div
+              <MotionDiv aria-hidden className="pointer-events-none absolute inset-0">
+                <MotionDiv
                   initial={{ x: -8, y: -6, opacity: 0.18 }}
                   animate={{
                     x: [-8, 4, -6, -8],
@@ -161,7 +165,7 @@ export default function Navbar() {
                   className="absolute -top-10 -left-14 w-48 h-48 rounded-full
                              bg-gradient-to-tr from-cyan-400/10 via-violet-400/10 to-pink-400/10 blur-xl"
                 />
-                <motion.div
+                <MotionDiv
                   initial={{ x: 6, y: 8, opacity: 0.16 }}
                   animate={{
                     x: [6, -4, 8, 6],
@@ -172,10 +176,10 @@ export default function Navbar() {
                   className="absolute -bottom-12 -right-16 w-52 h-52 rounded-full
                              bg-gradient-to-tr from-pink-400/10 via-violet-400/10 to-cyan-400/10 blur-xl"
                 />
-              </motion.div>
+              </MotionDiv>
 
               {/* 内容层：淡入淡出 */}
-              <motion.div
+              <MotionDiv
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -203,11 +207,11 @@ export default function Navbar() {
                   );
                 })}
                 <ThemeToggle />
-              </motion.div>
+              </MotionDiv>
             </div>
-          </motion.div>
+          </MotionDiv>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </MotionNav>
   );
 }
