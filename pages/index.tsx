@@ -33,7 +33,7 @@ export default function Home() {
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
           className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-                     w-[800px] h-[800px] rounded-full 
+                     w-[700px] h-[700px] md:w-[800px] md:h-[800px] rounded-full 
                      bg-gradient-to-tr from-cyan-400/18 via-violet-400/18 to-pink-400/18 
                      blur-3xl"
         />
@@ -43,7 +43,7 @@ export default function Home() {
           initial={{ scale: 0.92, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mt-24 text-6xl md:text-7xl font-extrabold tracking-tight 
+          className="mt-24 text-5xl md:text-7xl font-extrabold tracking-tight 
                      bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 
                      bg-clip-text text-transparent drop-shadow-sm"
         >
@@ -57,7 +57,7 @@ export default function Home() {
           transition={{ delay: 0.5 }}
           className="mt-6 w-full max-w-xl mx-auto rounded-xl 
                      bg-black/80 text-green-400 font-mono text-left text-sm 
-                     px-6 py-4 shadow-lg"
+                     px-5 md:px-6 py-4 shadow-lg"
         >
           <span className="text-green-500">$ </span>
           <Typewriter
@@ -81,22 +81,21 @@ export default function Home() {
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.7 }}
-          className="mt-6 text-lg md:text-xl max-w-2xl
+          className="mt-6 text-base md:text-xl max-w-2xl
                      text-gray-700 dark:text-white/80
                      backdrop-blur-xl bg-white/90 dark:bg-black/40
-                     px-6 py-4 rounded-2xl border border-black/10 dark:border-white/20"
+                     px-5 md:px-6 py-4 rounded-2xl border border-black/10 dark:border-white/20"
         >
           专注于 Minecraft 插件开发与像素美术创作，用技术与美学打造独特的游戏体验。
         </MotionP>
 
-        {/* 优化版时间轴（左右交错 + 线条流动 + 节点脉冲） */}
-        <section className="mt-20 max-w-5xl w-full relative">
+        {/* 响应式时间轴（移动端单列，桌面端左右交错 + 线条流动 + 节点脉冲） */}
+        <section className="mt-16 md:mt-20 max-w-5xl w-full relative">
           <div className="relative mx-auto">
-            {/* 中间竖线（背景线） */}
+            {/* 中间竖线（移动端靠左，桌面端居中） */}
             <div
-              className="absolute left-1/2 top-0 h-full w-[2px] 
-                         bg-gray-300 dark:bg-gray-700 
-                         transform -translate-x-1/2"
+              className="absolute left-4 md:left-1/2 top-0 h-full w-[2px] 
+                         bg-gray-300 dark:bg-gray-700 transform -translate-x-0 md:-translate-x-1/2"
             ></div>
 
             {/* 动态高亮线条：进入视口时从上至下点亮 */}
@@ -105,9 +104,9 @@ export default function Home() {
               whileInView={{ height: "100%" }}
               viewport={{ once: true }}
               transition={{ duration: 2, ease: "easeInOut" }}
-              className="absolute left-1/2 top-0 w-[2px] 
+              className="absolute left-4 md:left-1/2 top-0 w-[2px] 
                          bg-gradient-to-b from-cyan-400 via-violet-400 to-pink-400 
-                         transform -translate-x-1/2"
+                         transform -translate-x-0 md:-translate-x-1/2"
             />
 
             {[
@@ -122,65 +121,88 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.3 }}
-                className={`mb-16 flex items-center w-full ${
-                  i % 2 === 0 ? "justify-start" : "justify-end"
-                }`}
+                className={`mb-10 md:mb-16 flex w-full ${i % 2 === 0 ? "md:justify-start" : "md:justify-end"}`}
               >
                 {/* 时间点（半透明描边 + 脉冲扩散动画） */}
                 <div
-                  className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 
+                  className="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-5 md:w-6 h-5 md:h-6 
                              rounded-full border-2 border-cyan-400/60 
                              bg-white/70 dark:bg-black/40 
-                             shadow-[0_0_10px_rgba(34,211,238,0.6)] 
+                             shadow-[0_0_8px_rgba(34,211,238,0.5)] 
                              flex items-center justify-center"
                 >
                   <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
-                  <span className="absolute w-6 h-6 rounded-full border-2 border-cyan-400/40 animate-ping"></span>
+                  <span className="absolute w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-cyan-400/40 animate-ping"></span>
                 </div>
 
-                {/* 信息卡片（左右交错） */}
+                {/* 信息卡片（移动端单列在右侧；桌面端左右交错） */}
                 <div
-                  className={`relative w-[45%] p-6 rounded-2xl 
+                  className={`relative ml-10 md:ml-0 md:w-[45%] p-4 md:p-6 rounded-2xl 
                               backdrop-blur-xl bg-white/80 dark:bg-black/40 
                               border border-black/10 dark:border-white/20 shadow-lg
                               hover:scale-105 transition-transform duration-300
-                              ${i % 2 === 0 ? "ml-10 text-left" : "mr-10 text-right"}`}
+                              ${i % 2 === 0 ? "md:ml-10 md:text-left" : "md:mr-10 md:text-right"}`}
                 >
-                  <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+                  <h3 className="text-base md:text-lg font-bold text-gray-800 dark:text-white">
                     {item.year} · {item.title}
                   </h3>
-                  <p className="mt-2 text-gray-600 dark:text-white/70">{item.desc}</p>
+                  <p className="mt-2 text-sm md:text-base text-gray-600 dark:text-white/70">
+                    {item.desc}
+                  </p>
                 </div>
               </MotionDiv>
             ))}
           </div>
         </section>
 
-        {/* 漂浮光球装饰（与背景渐变适配，缓慢漂移） */}
+        {/* 漂浮光球装饰（响应式缩放与可见性） */}
+        {/* 桌面端主光球 */}
         <MotionDiv
           animate={{ x: [0, 30, -20, 0], y: [0, -20, 10, 0] }}
           transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }}
-          className="pointer-events-none absolute right-10 bottom-40 w-32 h-32 rounded-full 
+          className="pointer-events-none hidden md:block absolute right-10 bottom-40 
+                     w-28 h-28 lg:w-32 lg:h-32 rounded-full 
                      bg-gradient-to-tr from-cyan-400 via-violet-400 to-pink-400 
-                     blur-3xl opacity-60"
+                     blur-3xl opacity-55"
         />
+        {/* 桌面端次光球 */}
         <MotionDiv
           animate={{ x: [0, -25, 15, 0], y: [0, 15, -10, 0] }}
           transition={{ repeat: Infinity, duration: 25, ease: "easeInOut" }}
-          className="pointer-events-none absolute left-10 top-60 w-20 h-20 rounded-full 
+          className="pointer-events-none hidden md:block absolute left-10 top-60 
+                     w-16 h-16 lg:w-20 lg:h-20 rounded-full 
                      bg-gradient-to-tr from-pink-400 via-violet-400 to-cyan-400 
-                     blur-2xl opacity-50"
+                     blur-2xl opacity-45"
         />
+        {/* 桌面端第三光球 */}
         <MotionDiv
           animate={{ x: [0, 20, -15, 0], y: [0, -10, 15, 0] }}
           transition={{ repeat: Infinity, duration: 30, ease: "easeInOut" }}
-          className="pointer-events-none absolute right-1/3 top-96 w-16 h-16 rounded-full 
+          className="pointer-events-none hidden md:block absolute right-1/3 top-96 
+                     w-14 h-14 rounded-full 
                      bg-gradient-to-tr from-violet-400 via-cyan-400 to-pink-400 
                      blur-xl opacity-40"
+        />
+        {/* 移动端小光球（避免遮挡，保留氛围） */}
+        <MotionDiv
+          animate={{ x: [0, 12, -8, 0], y: [0, -10, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
+          className="pointer-events-none md:hidden absolute right-6 bottom-28 
+                     w-16 h-16 rounded-full 
+                     bg-gradient-to-tr from-cyan-400 via-violet-400 to-pink-400 
+                     blur-xl opacity-45"
+        />
+        <MotionDiv
+          animate={{ x: [0, -10, 6, 0], y: [0, 8, -6, 0] }}
+          transition={{ repeat: Infinity, duration: 18, ease: "easeInOut" }}
+          className="pointer-events-none md:hidden absolute left-6 top-48 
+                     w-12 h-12 rounded-full 
+                     bg-gradient-to-tr from-pink-400 via-violet-400 to-cyan-400 
+                     blur-lg opacity-40"
         />
       </main>
 
       <Footer />
     </div>
   );
-            }
+}
