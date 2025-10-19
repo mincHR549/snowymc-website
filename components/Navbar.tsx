@@ -7,6 +7,7 @@ import ThemeToggle from "./ThemeToggle";
 import React from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 // ✅ 封装 MotionNav
 type MotionNavProps = MotionProps & React.HTMLAttributes<HTMLElement>;
@@ -53,12 +54,19 @@ export default function Navbar() {
                         : "bg-white/60 dark:bg-black/30 border-black/10 dark:border-white/20"
                     }`}
       >
-        {/* Logo */}
+        {/* Logo + 品牌名 */}
         <Link
           href="/"
-          className="font-semibold tracking-tight text-black dark:text-white hover:scale-105 transition-transform"
+          className="flex items-center gap-2 font-semibold tracking-tight text-black dark:text-white hover:scale-105 transition-transform"
         >
-          SnowyMC
+          <Image
+            src="/8.svg"
+            alt="SnowyMC Logo"
+            width={32}
+            height={32}
+            className="w-8 h-8"
+          />
+          <span>SnowyMC</span>
         </Link>
 
         {/* 桌面端导航 */}
@@ -76,7 +84,6 @@ export default function Navbar() {
                 }`}
               >
                 {link.label}
-                {/* 渐变下划线 */}
                 {isActive && (
                   <span className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400"></span>
                 )}
@@ -132,4 +139,4 @@ export default function Navbar() {
       )}
     </MotionNav>
   );
-}
+        }
