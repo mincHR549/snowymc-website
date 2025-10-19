@@ -1,9 +1,26 @@
-import { FaGithub, FaQq } from "react-icons/fa";
+"use client";
 
+import { FaGithub, FaQq } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa6";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
+  const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowTop(window.scrollY > 200); // 滚动超过 200px 显示按钮
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer className="mt-24 pb-10">
+    <footer className="mt-24 pb-10 relative">
       <div className="mx-auto max-w-6xl px-6 py-8 rounded-2xl
                       backdrop-blur-xl bg-white/60 border border-black/10
                       dark:bg-black/30 dark:border-white/20 text-center">
@@ -13,12 +30,26 @@ export default function Footer() {
           SnowyMC — 技术与美学的交汇
         </p>
 
+        {/* 渐变分隔线 */}
+        <div className="mx-auto my-4 h-[2px] w-32 rounded-full 
+                        bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400" />
+
         {/* 社交按钮 */}
-        <div className="flex justify-center gap-6 text-2xl mb-4">
-          <a href="https://github.com/SnowyMCT" target="_blank" className="hover:text-gray-900 dark:hover:text-white">
+        <div className="flex justify-center gap-4 sm:gap-6 text-2xl mb-4">
+          <a
+            href="https://github.com/SnowyMCT"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-900 dark:hover:text-white hover:scale-110 transition-transform"
+          >
             <FaGithub />
           </a>
-          <a href="https://qm.qq.com/q/wVbC2R3SsE" target="_blank" className="hover:text-blue-500">
+          <a
+            href="https://qm.qq.com/q/wVbC2R3SsE"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-blue-500 hover:scale-110 transition-transform"
+          >
             <FaQq />
           </a>
         </div>
@@ -28,6 +59,19 @@ export default function Footer() {
           © {new Date().getFullYear()} SnowyMC. All rights reserved.
         </p>
       </div>
+
+      {/* 返回顶部按钮 */}
+      {showTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 p-3 rounded-full 
+                     bg-gradient-to-r from-cyan-400 to-pink-400 
+                     text-white shadow-lg hover:scale-110 transition-transform"
+          aria-label="返回顶部"
+        >
+          <FaArrowUp />
+        </button>
+      )}
     </footer>
   );
 }
