@@ -1,6 +1,7 @@
 // pages/index.tsx
 "use client";
 
+import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Typewriter } from "react-simple-typewriter";
@@ -8,20 +9,47 @@ import {
   MotionH1,
   MotionDiv,
   MotionP,
-  MotionDiv as MDiv, // alias if needed
 } from "../components/motion-safe";
 
 export default function Home() {
   return (
     <div className="min-h-screen relative overflow-hidden">
+      <Head>
+        <title>SnowyMC - Minecraft 插件与像素美术</title>
+        <meta
+          name="description"
+          content="SnowyMC 专注于 Minecraft 插件开发与像素美术创作，用技术与美学打造独特的游戏体验。"
+        />
+        <meta
+          name="keywords"
+          content="SnowyMC, Minecraft, 插件, 服务器, 像素美术"
+        />
+        <meta property="og:title" content="SnowyMC 官网" />
+        <meta
+          property="og:description"
+          content="Minecraft 插件开发与像素美术创作。"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.snowymc.top" />
+        <meta
+          property="og:image"
+          content="https://www.snowymc.top/og-image.png"
+        />
+      </Head>
+
       <Navbar />
 
       <main className="relative flex flex-col items-center justify-center min-h-screen text-center px-6">
-        
-        {/* 渐变光晕背景 */}
-        <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] 
-                        bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 
-                        opacity-30 blur-3xl rounded-full pointer-events-none" />
+        {/* 动态渐变圈背景 */}
+        <MotionDiv
+          initial={{ rotate: 0 }}
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+                     w-[800px] h-[800px] rounded-full 
+                     bg-gradient-to-tr from-cyan-400/20 via-violet-400/20 to-pink-400/20 
+                     blur-3xl"
+        />
 
         {/* 标题 */}
         <MotionH1
@@ -80,7 +108,11 @@ export default function Home() {
           animate="visible"
           variants={{
             hidden: { opacity: 0, y: 30 },
-            visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2 } },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { staggerChildren: 0.2 },
+            },
           }}
           className="mt-10 flex flex-wrap items-center justify-center gap-4"
         >
@@ -91,14 +123,17 @@ export default function Home() {
           ].map((btn, i) => (
             <MotionDiv
               key={i}
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="relative px-6 py-3 rounded-xl font-medium
                          text-gray-800 dark:text-white
-                         border border-transparent
                          bg-white/80 dark:bg-black/30
-                         transition
+                         shadow-md hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]
+                         transition-all duration-300
                          before:absolute before:inset-0 before:rounded-xl
                          before:p-[2px] before:bg-gradient-to-r before:from-cyan-400 before:to-pink-400
                          before:opacity-0 hover:before:opacity-100
@@ -113,9 +148,18 @@ export default function Home() {
         {/* 卡片区块 */}
         <section className="mt-16 grid w-full max-w-6xl grid-cols-1 md:grid-cols-3 gap-6 px-2">
           {[
-            { title: "插件框架", desc: "高性能、可扩展的 Minecraft 插件基础框架。" },
-            { title: "RPG 系统", desc: "任务、技能与装备的完整生态系统。" },
-            { title: "像素美术库", desc: "标准化角色立绘、Logo 与表情差分资源。" },
+            {
+              title: "插件框架",
+              desc: "高性能、可扩展的 Minecraft 插件基础框架。",
+            },
+            {
+              title: "RPG 系统",
+              desc: "任务、技能与装备的完整生态系统。",
+            },
+            {
+              title: "像素美术库",
+              desc: "标准化角色立绘、Logo 与表情差分资源。",
+            },
           ].map((item) => (
             <MotionDiv
               key={item.title}
@@ -126,18 +170,30 @@ export default function Home() {
               whileHover={{
                 scale: 1.05,
                 rotate: 1,
-                boxShadow: "0 12px 30px rgba(0,0,0,0.2)"
+                boxShadow: "0 12px 30px rgba(0,0,0,0.2)",
               }}
-              className="group rounded-2xl p-6 
+              className="group relative rounded-2xl p-6 
                          backdrop-blur-xl bg-white/90 dark:bg-black/40
-                         border border-black/10 dark:border-white/20
-                         hover:shadow-xl transition"
+                         border border-transparent
+                         hover:border-transparent
+                         before:absolute before:inset-0 before:rounded-2xl
+                         before:p-[2px] before:bg-gradient-to-r 
+                         before:from-cyan-400 before:via-violet-400 before:to-pink-400
+                         before:opacity-0 group-hover:before:opacity-100
+                         before:transition before:duration-500
+                         before:-z-10"
             >
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">{item.title}</h3>
-              <p className="mt-2 text-sm text-gray-700 dark:text-white/80">{item.desc}</p>
-              <div className="mt-4 h-1 w-0 group-hover:w-full transition-all
+              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-sm text-gray-700 dark:text-white/80">
+                {item.desc}
+              </p>
+              <div
+                className="mt-4 h-1 w-0 group-hover:w-full transition-all
                               bg-gradient-to-r from-cyan-300 via-violet-300 to-pink-300
-                              dark:from-cyan-400 dark:via-violet-400 dark:to-pink-400 rounded"></div>
+                              dark:from-cyan-400 dark:via-violet-400 dark:to-pink-400 rounded"
+              ></div>
             </MotionDiv>
           ))}
         </section>
@@ -146,4 +202,4 @@ export default function Home() {
       <Footer />
     </div>
   );
-}
+                    }
