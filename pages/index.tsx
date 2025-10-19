@@ -104,7 +104,7 @@ export default function Home() {
 
         {/* 时间轴区块 */}
         <section className="mt-20 max-w-4xl w-full relative">
-          <div className="border-l-2 border-cyan-400/50 dark:border-cyan-300/50 ml-4">
+          <div className="border-l-2 border-cyan-400/30 dark:border-cyan-300/30 ml-4">
             {[
               {
                 year: "2021",
@@ -135,9 +135,11 @@ export default function Home() {
                 transition={{ duration: 0.6, delay: i * 0.2 }}
                 className="mb-12 ml-6 relative"
               >
-                {/* 时间点圆圈 */}
+                {/* 改良版时间点圆圈 */}
                 <span className="absolute -left-5 top-1 w-4 h-4 rounded-full 
-                                 bg-gradient-to-r from-cyan-400 to-pink-400 shadow-md"></span>
+                                 border-2 border-cyan-400/60 dark:border-cyan-300/60 
+                                 bg-white/70 dark:bg-black/40 
+                                 shadow-[0_0_8px_rgba(34,211,238,0.5)]"></span>
                 <h3 className="text-xl font-bold text-gray-800 dark:text-white">
                   {item.year} · {item.title}
                 </h3>
@@ -147,36 +149,33 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 多个悬浮信息球装饰 */}
+        {/* 漂浮光球装饰 */}
         <MotionDiv
-          initial={{ y: 0 }}
-          animate={{ y: [0, -20, 0] }}
-          transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+          animate={{ x: [0, 30, -20, 0], y: [0, -20, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }}
           className="absolute right-10 bottom-40 w-32 h-32 rounded-full 
                      bg-gradient-to-tr from-cyan-400 via-violet-400 to-pink-400 
-                     blur-xl opacity-70 shadow-2xl"
+                     blur-3xl opacity-60"
         />
 
         <MotionDiv
-          initial={{ y: 0 }}
-          animate={{ y: [0, -15, 0] }}
-          transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+          animate={{ x: [0, -25, 15, 0], y: [0, 15, -10, 0] }}
+          transition={{ repeat: Infinity, duration: 25, ease: "easeInOut" }}
           className="absolute left-10 top-60 w-20 h-20 rounded-full 
                      bg-gradient-to-tr from-pink-400 via-violet-400 to-cyan-400 
-                     blur-lg opacity-60 shadow-xl"
+                     blur-2xl opacity-50"
         />
 
         <MotionDiv
-          initial={{ y: 0 }}
-          animate={{ y: [0, -10, 0] }}
-          transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
+          animate={{ x: [0, 20, -15, 0], y: [0, -10, 15, 0] }}
+          transition={{ repeat: Infinity, duration: 30, ease: "easeInOut" }}
           className="absolute right-1/3 top-96 w-16 h-16 rounded-full 
                      bg-gradient-to-tr from-violet-400 via-cyan-400 to-pink-400 
-                     blur-md opacity-50 shadow-lg"
+                     blur-xl opacity-40"
         />
       </main>
 
       <Footer />
     </div>
   );
-                    }
+}
