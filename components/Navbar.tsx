@@ -1,17 +1,13 @@
-// components/Navbar.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-
-// 显式声明 Motion 组件，确保 TS 类型正确
-const MotionNav = motion.nav;
-const MotionDiv = motion.div;
+import { MotionDiv, MotionNav } from "./motion-safe"; // ✅ 使用你的 motion-safe 封装
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -145,14 +141,12 @@ export default function Navbar() {
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="md:hidden absolute top-[70px] left-0 w-full px-6"
           >
-            {/* 背景层：毛玻璃始终可见 */}
             <div
               className="relative rounded-2xl overflow-hidden border
                          backdrop-blur-2xl bg-gradient-to-br from-white/18 via-white/10 to-white/18
                          dark:from-black/24 dark:via-black/16 dark:to-black/24
                          border-white/26 dark:border-white/12 shadow-[0_10px_28px_rgba(0,0,0,0.22)]"
             >
-              {/* 超级细微光晕（移动端） */}
               <MotionDiv aria-hidden className="pointer-events-none absolute inset-0">
                 <MotionDiv
                   initial={{ x: -8, y: -6, opacity: 0.18 }}
@@ -178,7 +172,6 @@ export default function Navbar() {
                 />
               </MotionDiv>
 
-              {/* 内容层：淡入淡出 */}
               <MotionDiv
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
