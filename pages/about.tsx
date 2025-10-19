@@ -208,6 +208,11 @@ export default function About() {
               role: "小插件开发｜服务端搭建",
               avatar: "https://s21.ax1x.com/2025/10/19/pVLaWmF.jpg",
             },
+            {
+              name: "EndurAut",
+              role: "和我一生的人又会何时遇见",
+              avatar: "https://s21.ax1x.com/2025/10/19/pVL6Dk8.jpg",
+             },
           ].map((m) => (
             <MotionDiv
               key={m.name}
