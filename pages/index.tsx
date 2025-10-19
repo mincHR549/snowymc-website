@@ -102,101 +102,78 @@ export default function Home() {
           专注于 Minecraft 插件开发与像素美术创作，用技术与美学打造独特的游戏体验。
         </MotionP>
 
-        {/* 按钮组 */}
-        <MotionDiv
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0, y: 30 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { staggerChildren: 0.2 },
-            },
-          }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
-        >
-          {[
-            { label: "查看项目", href: "/projects" },
-            { label: "美术资源", href: "/gallery" },
-            { label: "加入我们", href: "/join" },
-          ].map((btn, i) => (
-            <MotionDiv
-              key={i}
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative px-6 py-3 rounded-xl font-medium
-                         text-gray-800 dark:text-white
-                         bg-white/80 dark:bg-black/30
-                         shadow-md hover:shadow-[0_0_20px_rgba(34,211,238,0.6)]
-                         transition-all duration-300
-                         before:absolute before:inset-0 before:rounded-xl
-                         before:p-[2px] before:bg-gradient-to-r before:from-cyan-400 before:to-pink-400
-                         before:opacity-0 hover:before:opacity-100
-                         before:transition before:duration-300
-                         before:-z-10"
-            >
-              {btn.label}
-            </MotionDiv>
-          ))}
-        </MotionDiv>
-
-        {/* 卡片区块 */}
-        <section className="mt-16 grid w-full max-w-6xl grid-cols-1 md:grid-cols-3 gap-6 px-2">
-          {[
-            {
-              title: "插件框架",
-              desc: "高性能、可扩展的 Minecraft 插件基础框架。",
-            },
-            {
-              title: "RPG 系统",
-              desc: "任务、技能与装备的完整生态系统。",
-            },
-            {
-              title: "像素美术库",
-              desc: "标准化角色立绘、Logo 与表情差分资源。",
-            },
-          ].map((item) => (
-            <MotionDiv
-              key={item.title}
-              initial={{ opacity: 0, y: 40, scale: 0.95, rotate: -2 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-              viewport={{ once: true }}
-              transition={{ type: "spring", stiffness: 120, damping: 15 }}
-              whileHover={{
-                scale: 1.05,
-                rotate: 1,
-                boxShadow: "0 12px 30px rgba(0,0,0,0.2)",
-              }}
-              className="group relative rounded-2xl p-6 
-                         backdrop-blur-xl bg-white/90 dark:bg-black/40
-                         border border-transparent
-                         hover:border-transparent
-                         before:absolute before:inset-0 before:rounded-2xl
-                         before:p-[2px] before:bg-gradient-to-r 
-                         before:from-cyan-400 before:via-violet-400 before:to-pink-400
-                         before:opacity-0 group-hover:before:opacity-100
-                         before:transition before:duration-500
-                         before:-z-10"
-            >
-              <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm text-gray-700 dark:text-white/80">
-                {item.desc}
-              </p>
-              <div
-                className="mt-4 h-1 w-0 group-hover:w-full transition-all
-                              bg-gradient-to-r from-cyan-300 via-violet-300 to-pink-300
-                              dark:from-cyan-400 dark:via-violet-400 dark:to-pink-400 rounded"
-              ></div>
-            </MotionDiv>
-          ))}
+        {/* 时间轴区块 */}
+        <section className="mt-20 max-w-4xl w-full relative">
+          <div className="border-l-2 border-cyan-400/50 dark:border-cyan-300/50 ml-4">
+            {[
+              {
+                year: "2021",
+                title: "插件框架",
+                desc: "高性能、可扩展的 Minecraft 插件基础框架。",
+              },
+              {
+                year: "2022",
+                title: "RPG 系统",
+                desc: "任务、技能与装备的完整生态系统。",
+              },
+              {
+                year: "2023",
+                title: "像素美术库",
+                desc: "标准化角色立绘、Logo 与表情差分资源。",
+              },
+              {
+                year: "2024",
+                title: "未来规划",
+                desc: "更多创新玩法与跨平台支持正在开发中。",
+              },
+            ].map((item, i) => (
+              <MotionDiv
+                key={i}
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.2 }}
+                className="mb-12 ml-6 relative"
+              >
+                {/* 时间点圆圈 */}
+                <span className="absolute -left-5 top-1 w-4 h-4 rounded-full 
+                                 bg-gradient-to-r from-cyan-400 to-pink-400 shadow-md"></span>
+                <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+                  {item.year} · {item.title}
+                </h3>
+                <p className="mt-2 text-gray-600 dark:text-white/70">{item.desc}</p>
+              </MotionDiv>
+            ))}
+          </div>
         </section>
+
+        {/* 多个悬浮信息球装饰 */}
+        <MotionDiv
+          initial={{ y: 0 }}
+          animate={{ y: [0, -20, 0] }}
+          transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+          className="absolute right-10 bottom-40 w-32 h-32 rounded-full 
+                     bg-gradient-to-tr from-cyan-400 via-violet-400 to-pink-400 
+                     blur-xl opacity-70 shadow-2xl"
+        />
+
+        <MotionDiv
+          initial={{ y: 0 }}
+          animate={{ y: [0, -15, 0] }}
+          transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+          className="absolute left-10 top-60 w-20 h-20 rounded-full 
+                     bg-gradient-to-tr from-pink-400 via-violet-400 to-cyan-400 
+                     blur-lg opacity-60 shadow-xl"
+        />
+
+        <MotionDiv
+          initial={{ y: 0 }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
+          className="absolute right-1/3 top-96 w-16 h-16 rounded-full 
+                     bg-gradient-to-tr from-violet-400 via-cyan-400 to-pink-400 
+                     blur-md opacity-50 shadow-lg"
+        />
       </main>
 
       <Footer />
