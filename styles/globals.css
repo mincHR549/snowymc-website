@@ -91,3 +91,61 @@ html {
 .dark .content-surface {
   backdrop-filter: saturate(120%) contrast(110%) blur(0.4px);
 }
+
+/* 🌈 更柔和的渐变流动（多方向移动） */
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes gradient-y {
+  0%, 100% {
+    background-position: 50% 0%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+}
+
+/* 双轴渐变动画组合 */
+.animate-gradient-x {
+  animation: gradient-x 24s ease-in-out infinite alternate,
+             gradient-y 48s ease-in-out infinite alternate;
+  will-change: background-position;
+}
+
+/* 🌫️ 不同速度的柔光浮动 */
+@keyframes float-slow {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(16px, -12px, 0); }
+}
+
+@keyframes float-slower {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-10px, 10px, 0); }
+}
+
+@keyframes float-slowest {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(8px, -16px, 0); }
+}
+
+.animate-float-slow {
+  animation: float-slow 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-slower {
+  animation: float-slower 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-slowest {
+  animation: float-slowest 28s ease-in-out infinite;
+  will-change: transform;
+}
+
