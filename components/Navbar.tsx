@@ -5,13 +5,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import React from "react";
+import { FiMenu, FiX } from "react-icons/fi";
 
-// ✅ 封装一个带类型的 MotionNav，解决 className 类型问题
+// 封装 MotionNav
 type MotionNavProps = MotionProps & React.HTMLAttributes<HTMLElement>;
 const MotionNav: React.FC<MotionNavProps> = (props) => <motion.nav {...props} />;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +22,13 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const navLinks = [
+    { href: "/about", label: "关于" },
+    { href: "/projects", label: "项目" },
+    { href: "/gallery", label: "美术" },
+    { href: "/contact", label: "联系" },
+  ];
 
   return (
     <MotionNav
@@ -41,42 +50,59 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="font-semibold tracking-tight text-black dark:text-white"
+          className="font-semibold tracking-tight text-black dark:text-white hover:scale-105 transition-transform"
         >
           SnowyMC
         </Link>
 
-        {/* 导航链接 */}
-        <div className="flex items-center gap-5">
-          <Link
-            href="/about"
-            className="text-sm text-black/80 hover:text-black transition dark:text-white/80 dark:hover:text-white"
-          >
-            关于
-          </Link>
-          <Link
-            href="/projects"
-            className="text-sm text-black/80 hover:text-black transition dark:text-white/80 dark:hover:text-white"
-          >
-            项目
-          </Link>
-          <Link
-            href="/gallery"
-            className="text-sm text-black/80 hover:text-black transition dark:text-white/80 dark:hover:text-white"
-          >
-            美术
-          </Link>
-          <Link
-            href="/contact"
-            className="text-sm text-black/80 hover:text-black transition dark:text-white/80 dark:hover:text-white"
-          >
-            联系
-          </Link>
-
-          {/* 主题切换按钮 */}
+        {/* 桌面端导航 */}
+        <div className="hidden md:flex items-center gap-5">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm text-black/80 hover:text-black transition dark:text-white/80 dark:hover:text-white"
+            >
+              {link.label}
+            </Link>
+          ))}
           <ThemeToggle />
         </div>
+
+        {/* 移动端汉堡按钮 */}
+        <button
+          className="md:hidden text-2xl text-black dark:text-white"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle Menu"
+        >
+          {menuOpen ? <FiX /> : <FiMenu />}
+        </button>
       </div>
+
+      {/* 移动端菜单 */}
+      {menuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="md:hidden absolute top-[70px] left-0 w-full px-6"
+        >
+          <div className="flex flex-col gap-4 backdrop-blur-xl bg-white/90 dark:bg-black/60 rounded-2xl p-6 border border-black/10 dark:border-white/20 shadow-lg">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-base text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <ThemeToggle />
+          </div>
+        </motion.div>
+      )}
     </MotionNav>
   );
 }
