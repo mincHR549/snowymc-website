@@ -67,7 +67,7 @@ export default function Navbar() {
           transition={{ duration: 1.2, ease: "easeOut" }}
           className="absolute inset-0 pointer-events-none overflow-hidden"
         >
-          <motion.div
+          <MotionDiv
             animate={{
               x: [0, 20, 0],
               y: [0, -10, 0],
@@ -79,9 +79,9 @@ export default function Navbar() {
               ease: "easeInOut",
             }}
             className="absolute -top-8 -left-10 w-40 h-40 rounded-full bg-cyan-400/15 blur-3xl"
-          ></motion.div>
+          ></MotionDiv>
 
-          <motion.div
+          <MotionDiv
             animate={{
               x: [0, -15, 0],
               y: [0, 10, 0],
@@ -93,7 +93,7 @@ export default function Navbar() {
               ease: "easeInOut",
             }}
             className="absolute bottom-0 right-0 w-52 h-52 rounded-full bg-violet-400/15 blur-3xl"
-          ></motion.div>
+          ></MotionDiv>
         </MotionDiv>
 
         {/* 🌟 内容层 */}
