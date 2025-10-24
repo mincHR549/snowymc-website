@@ -1,38 +1,64 @@
 "use client";
 
-import React from "react";
 import { motion, MotionProps } from "framer-motion";
+import React from "react";
 
 /**
  * motion-safe.tsx
- * 为常用 HTML 标签创建类型安全的 motion 组件。
- * 解决 Framer Motion v10+ 在严格 TypeScript 下不识别 className 等属性的问题。
+ * 为常用 HTML 标签创建类型安全的 motion 组件
+ * 解决 Framer Motion v10+ 在严格 TypeScript 下 className 等属性报错问题
  */
 
-export type MotionDivProps = MotionProps & React.HTMLAttributes<HTMLDivElement>;
-export const MotionDiv: React.FC<MotionDivProps> = (props) => <motion.div {...props} />;
+// ✅ MotionDiv
+export const MotionDiv = React.forwardRef<
+  HTMLDivElement,
+  MotionProps & React.HTMLAttributes<HTMLDivElement>
+>((props, ref) => <motion.div ref={ref} {...props} />);
 
-export type MotionSectionProps = MotionProps & React.HTMLAttributes<HTMLElement>;
-export const MotionSection: React.FC<MotionSectionProps> = (props) => <motion.section {...props} />;
+// ✅ MotionNav
+export const MotionNav = React.forwardRef<
+  HTMLElement,
+  MotionProps & React.HTMLAttributes<HTMLElement>
+>((props, ref) => <motion.nav ref={ref} {...props} />);
 
-export type MotionH1Props = MotionProps & React.HTMLAttributes<HTMLHeadingElement>;
-export const MotionH1: React.FC<MotionH1Props> = (props) => <motion.h1 {...props} />;
+// ✅ MotionSpan（修复 Navbar 中 layoutId + className 报错）
+export const MotionSpan = React.forwardRef<
+  HTMLSpanElement,
+  MotionProps & React.HTMLAttributes<HTMLSpanElement>
+>((props, ref) => <motion.span ref={ref} {...props} />);
 
-export type MotionH2Props = MotionProps & React.HTMLAttributes<HTMLHeadingElement>;
-export const MotionH2: React.FC<MotionH2Props> = (props) => <motion.h2 {...props} />;
+// 可选：其他常用 motion 元素
+export const MotionSection = React.forwardRef<
+  HTMLElement,
+  MotionProps & React.HTMLAttributes<HTMLElement>
+>((props, ref) => <motion.section ref={ref} {...props} />);
 
-export type MotionH3Props = MotionProps & React.HTMLAttributes<HTMLHeadingElement>;
-export const MotionH3: React.FC<MotionH3Props> = (props) => <motion.h3 {...props} />;
+export const MotionH1 = React.forwardRef<
+  HTMLHeadingElement,
+  MotionProps & React.HTMLAttributes<HTMLHeadingElement>
+>((props, ref) => <motion.h1 ref={ref} {...props} />);
 
-export type MotionPProps = MotionProps & React.HTMLAttributes<HTMLParagraphElement>;
-export const MotionP: React.FC<MotionPProps> = (props) => <motion.p {...props} />;
+export const MotionH2 = React.forwardRef<
+  HTMLHeadingElement,
+  MotionProps & React.HTMLAttributes<HTMLHeadingElement>
+>((props, ref) => <motion.h2 ref={ref} {...props} />);
 
-export type MotionAProps = MotionProps & React.AnchorHTMLAttributes<HTMLAnchorElement>;
-export const MotionA: React.FC<MotionAProps> = (props) => <motion.a {...props} />;
+export const MotionH3 = React.forwardRef<
+  HTMLHeadingElement,
+  MotionProps & React.HTMLAttributes<HTMLHeadingElement>
+>((props, ref) => <motion.h3 ref={ref} {...props} />);
 
-export type MotionImgProps = MotionProps & React.ImgHTMLAttributes<HTMLImageElement>;
-export const MotionImg: React.FC<MotionImgProps> = (props) => <motion.img {...props} />;
+export const MotionP = React.forwardRef<
+  HTMLParagraphElement,
+  MotionProps & React.HTMLAttributes<HTMLParagraphElement>
+>((props, ref) => <motion.p ref={ref} {...props} />);
 
-// ✅ 新增：类型安全的 MotionNav
-export type MotionNavProps = MotionProps & React.HTMLAttributes<HTMLElement>;
-export const MotionNav: React.FC<MotionNavProps> = (props) => <motion.nav {...props} />;
+export const MotionA = React.forwardRef<
+  HTMLAnchorElement,
+  MotionProps & React.AnchorHTMLAttributes<HTMLAnchorElement>
+>((props, ref) => <motion.a ref={ref} {...props} />);
+
+export const MotionImg = React.forwardRef<
+  HTMLImageElement,
+  MotionProps & React.ImgHTMLAttributes<HTMLImageElement>
+>((props, ref) => <motion.img ref={ref} {...props} />);
