@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-import { MotionDiv, MotionNav, MotionSpan } from "./motion-safe";
+import { MotionDiv, MotionNav } from "./motion-safe";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -16,6 +16,7 @@ export default function Navbar() {
   const router = useRouter();
 
   useEffect(() => {
+    // 判断浏览器是否支持毛玻璃
     setSupportsBlur(CSS.supports("backdrop-filter", "blur(4px)"));
   }, []);
 
@@ -36,74 +37,41 @@ export default function Navbar() {
   return (
     <MotionNav
       initial={{ y: -60, opacity: 0 }}
-      animate={{
-        y: 0,
-        opacity: 1,
-        scale: scrolled ? 0.98 : 1,
-        boxShadow: scrolled
-          ? "0 4px 30px rgba(0,0,0,0.15)"
-          : "0 2px 10px rgba(0,0,0,0.05)",
-      }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className="fixed top-0 left-0 w-full z-50"
     >
       <div
-        className={`relative mx-auto max-w-6xl rounded-2xl mt-3 overflow-hidden border transition-all duration-300 ${
-          supportsBlur ? "backdrop-blur-sm" : ""
-        } ${
-          scrolled
-            ? "bg-white/60 dark:bg-black/40 border-white/20 dark:border-white/10"
-            : "bg-white/30 dark:bg-black/30 border-white/10 dark:border-white/10"
-        }`}
+        className={`relative mx-auto max-w-6xl rounded-2xl mt-3 overflow-hidden border
+                    transition-all duration-300 ${supportsBlur ? "backdrop-blur-sm" : ""}
+                    ${
+                      scrolled
+                        ? "bg-white/60 dark:bg-black/40 border-white/20 dark:border-white/10 shadow-lg"
+                        : "bg-white/30 dark:bg-black/30 border-white/10 dark:border-white/10 shadow-md"
+                    }`}
         style={{
           willChange: "transform, opacity, filter",
           transform: "translate3d(0,0,0)",
         }}
       >
-        {/* ✨ 背景光效层 */}
+        {/* 背景光效层 */}
         <MotionDiv
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.15 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
           className="absolute inset-0 pointer-events-none overflow-hidden"
         >
-          <MotionDiv
-            animate={{
-              x: [0, 20, 0],
-              y: [0, -10, 0],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute -top-8 -left-10 w-40 h-40 rounded-full bg-cyan-400/15 blur-3xl"
-          ></MotionDiv>
-
-          <MotionDiv
-            animate={{
-              x: [0, -15, 0],
-              y: [0, 10, 0],
-              opacity: [0.1, 0.25, 0.1],
-            }}
-            transition={{
-              duration: 7,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute bottom-0 right-0 w-52 h-52 rounded-full bg-violet-400/15 blur-3xl"
-          ></MotionDiv>
+          <div className="absolute -top-8 -left-10 w-40 h-40 rounded-full bg-cyan-400/10 blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-52 h-52 rounded-full bg-violet-400/10 blur-3xl"></div>
         </MotionDiv>
 
-        {/* 🌟 内容层 */}
+        {/* 内容层 */}
         <MotionDiv
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.15 }}
           className="flex items-center justify-between px-6 py-3 relative"
         >
-          {/* Logo */}
           <Link
             href="/"
             className="flex items-center gap-2 font-semibold tracking-tight text-black dark:text-white hover:scale-105 transition-transform"
@@ -126,27 +94,15 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative text-sm font-medium group transition-all duration-200 ${
+                  className={`relative text-sm transition ${
                     isActive
-                      ? "text-cyan-500 dark:text-cyan-400"
+                      ? "text-cyan-500 dark:text-cyan-400 font-semibold"
                       : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
                   }`}
                 >
-                  <span className="group-hover:-translate-y-[2px] transition-transform duration-200 inline-block">
-                    {link.label}
-                  </span>
-
-                  {/* 🌈 动态彩色横栏 */}
+                  {link.label}
                   {isActive && (
-                    <MotionSpan
-                      layoutId="nav-indicator"
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 30,
-                      }}
-                      className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400"
-                    ></MotionSpan>
+                    <span className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400"></span>
                   )}
                 </Link>
               );
@@ -165,7 +121,7 @@ export default function Navbar() {
         </MotionDiv>
       </div>
 
-      {/* 📱 移动端菜单 */}
+      {/* 移动端菜单 */}
       <AnimatePresence>
         {menuOpen && (
           <MotionDiv
@@ -182,44 +138,27 @@ export default function Navbar() {
               } bg-white/70 dark:bg-black/60 border-white/20 dark:border-white/10 shadow-md`}
             >
               <MotionDiv
-                initial="hidden"
-                animate="show"
-                exit="hidden"
-                variants={{
-                  hidden: { opacity: 0, y: -10 },
-                  show: {
-                    opacity: 1,
-                    y: 0,
-                    transition: {
-                      staggerChildren: 0.07,
-                      delayChildren: 0.1,
-                    },
-                  },
-                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
                 className="flex flex-col gap-4 p-6"
               >
                 {navLinks.map((link) => {
                   const isActive = router.pathname === link.href;
                   return (
-                    <MotionDiv
+                    <Link
                       key={link.href}
-                      variants={{
-                        hidden: { opacity: 0, y: 10 },
-                        show: { opacity: 1, y: 0 },
-                      }}
+                      href={link.href}
+                      className={`relative text-base transition ${
+                        isActive
+                          ? "text-cyan-500 dark:text-cyan-400 font-semibold"
+                          : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
+                      }`}
+                      onClick={() => setMenuOpen(false)}
                     >
-                      <Link
-                        href={link.href}
-                        className={`relative text-base transition ${
-                          isActive
-                            ? "text-cyan-500 dark:text-cyan-400 font-semibold"
-                            : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
-                        }`}
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
-                    </MotionDiv>
+                      {link.label}
+                    </Link>
                   );
                 })}
                 <ThemeToggle />
