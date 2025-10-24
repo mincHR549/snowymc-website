@@ -68,15 +68,32 @@ export default function Navbar() {
           className="absolute inset-0 pointer-events-none overflow-hidden"
         >
           <motion.div
-            animate={{ x: [0, 20, 0], y: [0, -10, 0], opacity: [0.1, 0.2, 0.1] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            animate={{
+              x: [0, 20, 0],
+              y: [0, -10, 0],
+              opacity: [0.1, 0.2, 0.1],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
             className="absolute -top-8 -left-10 w-40 h-40 rounded-full bg-cyan-400/15 blur-3xl"
-          />
+          ></motion.div>
+
           <motion.div
-            animate={{ x: [0, -15, 0], y: [0, 10, 0], opacity: [0.1, 0.25, 0.1] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            animate={{
+              x: [0, -15, 0],
+              y: [0, 10, 0],
+              opacity: [0.1, 0.25, 0.1],
+            }}
+            transition={{
+              duration: 7,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
             className="absolute bottom-0 right-0 w-52 h-52 rounded-full bg-violet-400/15 blur-3xl"
-          />
+          ></motion.div>
         </MotionDiv>
 
         {/* 🌟 内容层 */}
@@ -186,7 +203,10 @@ export default function Navbar() {
                   return (
                     <MotionDiv
                       key={link.href}
-                      variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
+                      variants={{
+                        hidden: { opacity: 0, y: 10 },
+                        show: { opacity: 1, y: 0 },
+                      }}
                     >
                       <Link
                         href={link.href}
