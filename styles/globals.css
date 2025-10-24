@@ -27,7 +27,7 @@
   50% { transform: translate3d(0, -15px, 0); opacity: 1; }
 }
 
-/* Tailwind 动画类扩展 */
+/* Tailwind 动画类扩展（保留你原有的命名） */
 .animate-gradient {
   animation: gradient 16s ease-in-out infinite;
   background-size: 400% 400%;
@@ -59,7 +59,6 @@
   }
 }
 
-
 /* 页面全高布局支持 */
 html, body, #__next {
   height: 100%;
@@ -77,12 +76,15 @@ html {
   overflow-y: scroll;
 }
 
+/* 选择态（更克制） */
 :root {
-  --sel-bg: rgba(0, 0, 0, 0.12);
+  --sel-bg: rgba(0, 0, 0, 0.08);
   --sel-fg: #000;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, Inter, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 }
 .dark :root {
-  --sel-bg: rgba(255, 255, 255, 0.16);
+  --sel-bg: rgba(255, 255, 255, 0.12);
   --sel-fg: #fff;
 }
 ::selection {
@@ -90,6 +92,12 @@ html {
   color: var(--sel-fg);
 }
 
+/* 字体栈：系统优先（SF 系） */
+html, body {
+  font-family: var(--font-sans);
+}
+
+/* 内容表面（轻薄玻璃） */
 .content-surface {
   backdrop-filter: saturate(130%) contrast(105%) blur(1px);
   -webkit-backdrop-filter: saturate(130%) contrast(105%) blur(1px);
@@ -100,71 +108,83 @@ html {
   filter: blur(80px);
 }
 
+/* Apple 风格 Timeline 组合类 */
 @layer components {
   .timeline-card {
-    @apply rounded-2xl px-6 py-4
-           bg-white/78 dark:bg-white/[0.06]
-           border border-black/5 dark:border-white/10
-           shadow-[0_1px_0_rgba(0,0,0,0.06),0_12px_28px_rgba(0,0,0,0.08)]
-           transition-transform duration-150 ease-[0.22,1,0.36,1];
+    @apply rounded-2xl px-6 py-4 border shadow transition-transform duration-150;
+    /* 背景（浅色） */
+    background-color: rgba(255, 255, 255, 0.80); /* 等价 bg-white/80，避免 bg-white/78 报错 */
+    /* 边框与阴影（克制） */
+    border-color: rgba(0, 0, 0, 0.05); /* 等价 border-black/5 */
+    box-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.06),
+      0 12px 28px rgba(0, 0, 0, 0.08);
+    /* Apple-like 缓动 */
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .dark .timeline-card {
+    background-color: rgba(255, 255, 255, 0.06); /* 等价 dark:bg-white/[0.06] */
+    border-color: rgba(255, 255, 255, 0.10);      /* 等价 dark:border-white/10 */
   }
   .timeline-card:hover {
-    @apply -translate-y-[2px] shadow-[0_1px_0_rgba(0,0,0,0.06),0_16px_40px_rgba(0,0,0,0.12)];
+    transform: translate3d(0, -2px, 0);
+    box-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.06),
+      0 16px 40px rgba(0, 0, 0, 0.12);
   }
+
   .timeline-title {
-    @apply font-semibold text-neutral-900 dark:text-white tracking-tight;
+    @apply font-semibold tracking-tight;
+    color: #111827; /* text-neutral-900 */
   }
+  .dark .timeline-title { color: #ffffff; }
+
   .timeline-desc {
-    @apply mt-1 text-neutral-700 dark:text-neutral-300 leading-relaxed;
+    @apply mt-1 leading-relaxed;
+    color: #374151; /* text-neutral-700 */
   }
+  .dark .timeline-desc { color: #d1d5db; /* text-neutral-300 */ }
+
   .timeline-node {
-    @apply w-5 h-5 md:w-6 md:h-6 rounded-full bg-white dark:bg-[#0d0f10]
-           border border-black/10 dark:border-white/15
-           shadow-[0_6px_18px_rgba(0,0,0,0.12)];
+    @apply rounded-full border;
+    width: 1.25rem;  /* w-5 */
+    height: 1.25rem; /* h-5 */
+    background-color: #ffffff; /* bg-white */
+    border-color: rgba(0, 0, 0, 0.10); /* border-black/10 */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     position: relative;
   }
+  @media (min-width: 768px) {
+    .timeline-node { width: 1.5rem; height: 1.5rem; } /* md:w-6 md:h-6 */
+  }
+  .dark .timeline-node {
+    background-color: #0d0f10;                    /* 深色节点底 */
+    border-color: rgba(255, 255, 255, 0.15);      /* dark:border-white/15 */
+  }
+
   .timeline-node-inner {
-    @apply absolute inset-[4px] md:inset-[5px] rounded-full
-           bg-gradient-to-b from-neutral-200 to-neutral-300
-           dark:from-[#151718] dark:to-[#1a1d1f];
-    /* 轻内发光，用 box-shadow 模拟真实光线 */
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(0,0,0,0.18);
+    position: absolute;
+    inset: 4px;       /* inset-[4px] */
+    border-radius: 9999px;
+    background-image: linear-gradient(to bottom, #e5e7eb, #d1d5db); /* from-neutral-200 to-neutral-300 */
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.7),
+      inset 0 -1px 0 rgba(0,0,0,0.18);
+  }
+  @media (min-width: 768px) {
+    .timeline-node-inner { inset: 5px; }
+  }
+  .dark .timeline-node-inner {
+    background-image: linear-gradient(to bottom, #151718, #1a1d1f);
   }
 }
 
-/* 推荐：在你已有的 globals.css 末尾补充 */
-
-/* 统一动效曲线 */
+/* 统一动效曲线（通用工具类，可在组件中使用） */
 .ease-smooth {
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* 移动端动画降频 */
+/* 移动端动画降频（进一步节流） */
 @media (max-width: 768px) {
-  .animate-gradient-smooth {
-    animation-duration: 40s;
-  }
-}
-
-/* 字体栈：系统优先（SF 系） */
-:root {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-               Roboto, "Helvetica Neue", Arial, Inter, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-}
-html, body {
-  font-family: var(--font-sans);
-}
-
-/* 选择态更克制 */
-:root {
-  --sel-bg: rgba(0, 0, 0, 0.08);
-  --sel-fg: #000;
-}
-.dark :root {
-  --sel-bg: rgba(255, 255, 255, 0.12);
-  --sel-fg: #fff;
-}
-::selection {
-  background: var(--sel-bg);
-  color: var(--sel-fg);
+  .animate-gradient-smooth { animation-duration: 40s; }
 }
