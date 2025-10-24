@@ -173,3 +173,34 @@ html, body { font-family: var(--font-sans); }
 .ease-smooth {
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
+
+
+/* 柔和呼吸感 */
+@keyframes breath {
+  0%, 100% { opacity: 0.9; filter: brightness(1); }
+  50% { opacity: 1; filter: brightness(1.15); }
+}
+.animate-breath {
+  animation: breath 4s ease-in-out infinite;
+}
+
+/* 光泽扫过 */
+.shine-text {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.6) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
