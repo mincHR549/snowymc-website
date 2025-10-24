@@ -44,14 +44,16 @@ export default function Home() {
   initial={{ opacity: 0, scale: 0.95 }}
   animate={{ opacity: 1, scale: 1 }}
   transition={{ duration: 0.8, ease: "easeOut" }}
-  whileHover={{ scale: 1.05 }}   // 鼠标经过时轻微放大
+  whileHover={{ scale: 1.05 }}
   className="relative mt-24 text-5xl md:text-7xl font-extrabold tracking-tight 
              text-transparent bg-clip-text 
-             bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 
+             bg-gradient-to-r from-cyan-600 via-violet-600 to-pink-600 
+             dark:from-cyan-300 dark:via-violet-300 dark:to-pink-300
              animate-breath cursor-pointer"
 >
   <span className="shine-text">SnowyMC</span>
 </MotionH1>
+
 
 
 
