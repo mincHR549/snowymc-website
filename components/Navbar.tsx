@@ -1,16 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion, MotionProps } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-import { MotionDiv, MotionNav } from "./motion-safe";
-
-// ✅ 修复点：定义 MotionSpan
-const MotionSpan = motion("span");
+import { MotionDiv, MotionNav, MotionSpan } from "./motion-safe";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -149,7 +146,7 @@ export default function Navbar() {
                         damping: 30,
                       }}
                       className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400"
-                    />
+                    ></MotionSpan>
                   )}
                 </Link>
               );
