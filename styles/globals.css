@@ -9,13 +9,58 @@
   100% { background-position: 0% 50%; }
 }
 
-/* 光晕浮动动画 */
+/* 光晕浮动动画（老版兼容） */
 @keyframes float {
   0%,100% { transform: translate3d(0,0,0); }
   50% { transform: translate3d(12px,-12px,0); }
 }
 
-/* 全局高度 */
+/* 柔和流动渐变动画（新版） */
+@keyframes gradient-smooth {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* 呼吸漂浮动画（新版） */
+@keyframes float-breath {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.8; }
+  50% { transform: translate3d(0, -15px, 0); opacity: 1; }
+}
+
+/* Tailwind 动画类扩展 */
+.animate-gradient {
+  animation: gradient 16s ease-in-out infinite;
+  background-size: 400% 400%;
+  will-change: background-position;
+}
+.bg-400% { background-size: 400% 400%; }
+
+.animate-float {
+  animation: float 10s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-gradient-smooth {
+  animation: gradient-smooth 20s ease-in-out infinite;
+  will-change: background-position;
+}
+
+.animate-float-breath {
+  animation: float-breath 8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  .animate-gradient-smooth {
+    animation-duration: 30s; /* 慢速渐变，节省性能 */
+  }
+  .animate-float-breath {
+    animation-duration: 12s; /* 减慢呼吸节奏 */
+  }
+}
+
+
+/* 页面全高布局支持 */
 html, body, #__next {
   height: 100%;
 }
@@ -26,13 +71,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 平滑滚动 */
+/* 平滑滚动与滚动条稳定 */
 html {
   scroll-behavior: smooth;
-  overflow-y: scroll; /* 避免滚动条闪动 */
+  overflow-y: scroll;
 }
 
-/* 文本选中效果（亮色/暗色模式） */
 :root {
   --sel-bg: rgba(0, 0, 0, 0.12);
   --sel-fg: #000;
@@ -46,13 +90,12 @@ html {
   color: var(--sel-fg);
 }
 
-/* Tailwind 工具类扩展 */
-.animate-gradient { animation: gradient 16s ease-in-out infinite; }
-.bg-400% { background-size: 400% 400%; }
-.animate-float { animation: float 10s ease-in-out infinite; }
-
-/* 前景表面：让光晕能轻微影响文字和按钮 */
 .content-surface {
   backdrop-filter: saturate(130%) contrast(105%) blur(1px);
   -webkit-backdrop-filter: saturate(130%) contrast(105%) blur(1px);
+}
+
+/* 柔化版模糊（性能优化） */
+.blur-soft {
+  filter: blur(80px);
 }
