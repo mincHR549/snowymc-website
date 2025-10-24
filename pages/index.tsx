@@ -47,14 +47,12 @@ export default function Home() {
   whileHover={{ scale: 1.05 }}
   className="relative mt-24 text-5xl md:text-7xl font-extrabold tracking-tight 
              text-transparent bg-clip-text 
-             bg-gradient-to-r from-cyan-600 via-violet-600 to-pink-600 
+             bg-gradient-to-r from-cyan-700 via-violet-700 to-pink-700 
              dark:from-cyan-300 dark:via-violet-300 dark:to-pink-300
              animate-breath cursor-pointer"
 >
   <span className="shine-text">SnowyMC</span>
 </MotionH1>
-
-
 
 
         {/* 打字机命令框 */}

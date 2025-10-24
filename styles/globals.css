@@ -174,10 +174,9 @@ html, body { font-family: var(--font-sans); }
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-
 /* 柔和呼吸感 */
 @keyframes breath {
-  0%, 100% { opacity: 0.9; filter: brightness(1); }
+  0%, 100% { opacity: 0.95; filter: brightness(1); }
   50% { opacity: 1; filter: brightness(1.15); }
 }
 .animate-breath {
@@ -191,7 +190,7 @@ html, body { font-family: var(--font-sans); }
   background: linear-gradient(
     90deg,
     rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.6) 50%,
+    rgba(255,255,255,0.5) 50%,
     rgba(255,255,255,0) 100%
   );
   background-size: 200% 100%;
@@ -204,4 +203,3 @@ html, body { font-family: var(--font-sans); }
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
-
