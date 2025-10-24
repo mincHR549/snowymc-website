@@ -60,7 +60,7 @@ export default function Navbar() {
           transform: "translate3d(0,0,0)",
         }}
       >
-        {/* ✨ 背景光效层（动态漂浮） */}
+        {/* ✨ 背景光效层 */}
         <MotionDiv
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.15 }}
@@ -146,7 +146,7 @@ export default function Navbar() {
                         damping: 30,
                       }}
                       className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400"
-                    />
+                    ></motion.span>
                   )}
                 </Link>
               );
