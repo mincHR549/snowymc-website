@@ -1,6 +1,7 @@
+// components/Timeline.tsx
 "use client";
 
-import { MotionDiv } from "./motion-safe"; // ✅ 使用安全封装
+import { MotionDiv } from "./motion-safe";
 
 const events = [
   { year: "2022年6月", title: "团队成立初", desc: "以 SnowyMC 为团队名称，一个只有三个人的团队成立了！" },
@@ -12,52 +13,61 @@ const events = [
 
 export default function Timeline() {
   return (
-    <div className="relative max-w-5xl mx-auto mt-16 md:mt-20">
-      {/* 竖线 */}
-      <div className="absolute top-0 left-4 md:left-1/2 transform md:-translate-x-1/2 w-[2px] h-full bg-gray-300 dark:bg-gray-700" />
+    <div className="relative max-w-5xl mx-auto mt-16 md:mt-20 px-4">
+      {/* 中央脊线 */}
+      <div className="absolute top-0 left-6 md:left-1/2 md:-translate-x-1/2 w-px h-full bg-black/10 dark:bg-white/12" />
 
-      {events.map((item, i) => (
-        <MotionDiv
-          key={i}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: i * 0.2 }}
-          className="mb-12 md:mb-16 grid grid-cols-[1fr_auto_1fr] md:gap-8 items-center"
-        >
-          {/* 左侧卡片（仅桌面端偶数项显示） */}
-          <div className={`hidden md:block ${i % 2 === 0 ? "text-right" : "invisible"}`}>
-            {i % 2 === 0 && (
-              <div className="p-6 rounded-2xl backdrop-blur-xl bg-white/80 dark:bg-black/40 border border-black/10 dark:border-white/20 shadow-lg hover:scale-105 transition-transform duration-300">
-                <h3 className="font-bold text-gray-800 dark:text-white">
-                  {item.year} · {item.title}
-                </h3>
-                <p className="mt-2 text-gray-600 dark:text-white/70">{item.desc}</p>
+      {/* 时间轴节点与卡片 */}
+      <div className="space-y-10 md:space-y-14">
+        {events.map((item, i) => {
+          const isLeft = i % 2 === 0;
+          return (
+            <MotionDiv
+              key={i}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-20% 0% -20% 0%" }}
+              transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1], delay: i * 0.06 }}
+              className="grid grid-cols-[auto_1fr] md:grid-cols-[1fr_auto_1fr] items-start md:gap-8"
+            >
+              {/* 左侧卡片（桌面端偶数项显示） */}
+              <div className={`hidden md:block ${isLeft ? "md:text-right" : "md:invisible"}`}>
+                {isLeft && (
+                  <article className="timeline-card">
+                    <header className="timeline-title">
+                      {item.year} · {item.title}
+                    </header>
+                    <p className="timeline-desc">{item.desc}</p>
+                  </article>
+                )}
               </div>
-            )}
-          </div>
 
-          {/* 中间圆点 */}
-          <div className="relative flex justify-center">
-            <div className="w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-cyan-400/60 bg-white dark:bg-black shadow-[0_0_8px_rgba(34,211,238,0.5)] flex items-center justify-center">
-              <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
-              <span className="absolute w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-cyan-400/40 animate-ping"></span>
-            </div>
-          </div>
-
-          {/* 右侧卡片（桌面端奇数项显示，移动端始终显示） */}
-          <div className={`${i % 2 === 1 ? "md:block" : "md:invisible"} md:text-left`}>
-            {(i % 2 === 1 || true) && (
-              <div className="mt-4 md:mt-0 p-6 rounded-2xl backdrop-blur-xl bg-white/80 dark:bg-black/40 border border-black/10 dark:border-white/20 shadow-lg hover:scale-105 transition-transform duration-300">
-                <h3 className="font-bold text-gray-800 dark:text-white">
-                  {item.year} · {item.title}
-                </h3>
-                <p className="mt-2 text-gray-600 dark:text-white/70">{item.desc}</p>
+              {/* 中心节点 */}
+              <div className="relative flex justify-center md:justify-center">
+                <div className="timeline-node">
+                  <div className="timeline-node-inner" />
+                </div>
               </div>
-            )}
-          </div>
-        </MotionDiv>
-      ))}
+
+              {/* 右侧卡片（桌面端奇数项显示；移动端始终显示在右列） */}
+              <div className={`${!isLeft ? "md:block" : "md:invisible"} md:text-left`}>
+                {(!isLeft || true) && (
+                  <article className="timeline-card mt-4 md:mt-0">
+                    <header className="timeline-title">
+                      {item.year} · {item.title}
+                    </header>
+                    <p className="timeline-desc">{item.desc}</p>
+                  </article>
+                )}
+              </div>
+            </MotionDiv>
+          );
+        })}
+      </div>
+
+      {/* 轻微顶部渐隐，提升层级感 */}
+      <div className="pointer-events-none absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-white to-transparent dark:from-black/40" />
     </div>
   );
 }
+

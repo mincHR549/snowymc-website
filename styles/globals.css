@@ -99,3 +99,72 @@ html {
 .blur-soft {
   filter: blur(80px);
 }
+
+@layer components {
+  .timeline-card {
+    @apply rounded-2xl px-6 py-4
+           bg-white/78 dark:bg-white/[0.06]
+           border border-black/5 dark:border-white/10
+           shadow-[0_1px_0_rgba(0,0,0,0.06),0_12px_28px_rgba(0,0,0,0.08)]
+           transition-transform duration-150 ease-[0.22,1,0.36,1];
+  }
+  .timeline-card:hover {
+    @apply -translate-y-[2px] shadow-[0_1px_0_rgba(0,0,0,0.06),0_16px_40px_rgba(0,0,0,0.12)];
+  }
+  .timeline-title {
+    @apply font-semibold text-neutral-900 dark:text-white tracking-tight;
+  }
+  .timeline-desc {
+    @apply mt-1 text-neutral-700 dark:text-neutral-300 leading-relaxed;
+  }
+  .timeline-node {
+    @apply w-5 h-5 md:w-6 md:h-6 rounded-full bg-white dark:bg-[#0d0f10]
+           border border-black/10 dark:border-white/15
+           shadow-[0_6px_18px_rgba(0,0,0,0.12)];
+    position: relative;
+  }
+  .timeline-node-inner {
+    @apply absolute inset-[4px] md:inset-[5px] rounded-full
+           bg-gradient-to-b from-neutral-200 to-neutral-300
+           dark:from-[#151718] dark:to-[#1a1d1f];
+    /* 轻内发光，用 box-shadow 模拟真实光线 */
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(0,0,0,0.18);
+  }
+}
+
+/* 推荐：在你已有的 globals.css 末尾补充 */
+
+/* 统一动效曲线 */
+.ease-smooth {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 移动端动画降频 */
+@media (max-width: 768px) {
+  .animate-gradient-smooth {
+    animation-duration: 40s;
+  }
+}
+
+/* 字体栈：系统优先（SF 系） */
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, Inter, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+html, body {
+  font-family: var(--font-sans);
+}
+
+/* 选择态更克制 */
+:root {
+  --sel-bg: rgba(0, 0, 0, 0.08);
+  --sel-fg: #000;
+}
+.dark :root {
+  --sel-bg: rgba(255, 255, 255, 0.12);
+  --sel-fg: #fff;
+}
+::selection {
+  background: var(--sel-bg);
+  color: var(--sel-fg);
+}
