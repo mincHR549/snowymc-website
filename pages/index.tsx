@@ -40,16 +40,21 @@ export default function Home() {
         />
 
         {/* 标题 */}
-        <MotionH1
-          initial={{ scale: 0.92, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mt-24 text-5xl md:text-7xl font-extrabold tracking-tight 
-                     bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 
-                     bg-clip-text text-transparent drop-shadow-sm"
-        >
-          SnowyMC
-        </MotionH1>
+<MotionH1
+  initial={{ scale: 0.92, opacity: 0 }}
+  animate={{ scale: 1, opacity: 1 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  whileHover={{ scale: 1.08, rotate: -1 }}   // 鼠标经过时放大+轻微旋转
+  whileTap={{ scale: 0.95 }}                 // 点击时轻微缩小
+  className="mt-24 text-5xl md:text-7xl font-extrabold tracking-tight 
+             bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 
+             bg-[length:200%_200%] animate-gradient 
+             bg-clip-text text-transparent drop-shadow-sm 
+             cursor-pointer transition-transform duration-300"
+>
+  SnowyMC
+</MotionH1>
+
 
         {/* 打字机命令框 */}
         <MotionDiv

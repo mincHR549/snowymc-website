@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================= 动画定义 ================= */
+
 /* 动态渐变动画 */
 @keyframes gradient {
   0% { background-position: 0% 50%; }
@@ -11,7 +13,7 @@
 
 /* 光晕浮动动画（老版兼容） */
 @keyframes float {
-  0%,100% { transform: translate3d(0,0,0); }
+  0%, 100% { transform: translate3d(0,0,0); }
   50% { transform: translate3d(12px,-12px,0); }
 }
 
@@ -27,7 +29,8 @@
   50% { transform: translate3d(0, -15px, 0); opacity: 1; }
 }
 
-/* Tailwind 动画类扩展（保留你原有的命名） */
+/* ================= 动画类扩展 ================= */
+
 .animate-gradient {
   animation: gradient 16s ease-in-out infinite;
   background-size: 400% 400%;
@@ -50,33 +53,27 @@
   will-change: transform, opacity;
 }
 
+/* 移动端动画降频（节流优化） */
 @media (max-width: 768px) {
-  .animate-gradient-smooth {
-    animation-duration: 30s; /* 慢速渐变，节省性能 */
-  }
-  .animate-float-breath {
-    animation-duration: 12s; /* 减慢呼吸节奏 */
-  }
+  .animate-gradient-smooth { animation-duration: 30s; }
+  .animate-float-breath { animation-duration: 12s; }
 }
 
-/* 页面全高布局支持 */
-html, body, #__next {
-  height: 100%;
-}
+/* ================= 全局样式 ================= */
 
-/* 字体渲染优化 */
+html, body, #__next { height: 100%; }
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 平滑滚动与滚动条稳定 */
 html {
   scroll-behavior: smooth;
   overflow-y: scroll;
 }
 
-/* 选择态（更克制） */
+/* 选择态 */
 :root {
   --sel-bg: rgba(0, 0, 0, 0.08);
   --sel-fg: #000;
@@ -92,10 +89,8 @@ html {
   color: var(--sel-fg);
 }
 
-/* 字体栈：系统优先（SF 系） */
-html, body {
-  font-family: var(--font-sans);
-}
+/* 字体栈 */
+html, body { font-family: var(--font-sans); }
 
 /* 内容表面（轻薄玻璃） */
 .content-surface {
@@ -103,28 +98,23 @@ html, body {
   -webkit-backdrop-filter: saturate(130%) contrast(105%) blur(1px);
 }
 
-/* 柔化版模糊（性能优化） */
-.blur-soft {
-  filter: blur(80px);
-}
+/* 柔化模糊 */
+.blur-soft { filter: blur(80px); }
 
-/* Apple 风格 Timeline 组合类 */
+/* ================= 组件：Apple 风格 Timeline ================= */
 @layer components {
   .timeline-card {
     @apply rounded-2xl px-6 py-4 border shadow transition-transform duration-150;
-    /* 背景（浅色） */
-    background-color: rgba(255, 255, 255, 0.80); /* 等价 bg-white/80，避免 bg-white/78 报错 */
-    /* 边框与阴影（克制） */
-    border-color: rgba(0, 0, 0, 0.05); /* 等价 border-black/5 */
+    background-color: rgba(255, 255, 255, 0.80);
+    border-color: rgba(0, 0, 0, 0.05);
     box-shadow:
       0 1px 0 rgba(0, 0, 0, 0.06),
       0 12px 28px rgba(0, 0, 0, 0.08);
-    /* Apple-like 缓动 */
     transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
   .dark .timeline-card {
-    background-color: rgba(255, 255, 255, 0.06); /* 等价 dark:bg-white/[0.06] */
-    border-color: rgba(255, 255, 255, 0.10);      /* 等价 dark:border-white/10 */
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.10);
   }
   .timeline-card:hover {
     transform: translate3d(0, -2px, 0);
@@ -135,38 +125,38 @@ html, body {
 
   .timeline-title {
     @apply font-semibold tracking-tight;
-    color: #111827; /* text-neutral-900 */
+    color: #111827;
   }
   .dark .timeline-title { color: #ffffff; }
 
   .timeline-desc {
     @apply mt-1 leading-relaxed;
-    color: #374151; /* text-neutral-700 */
+    color: #374151;
   }
-  .dark .timeline-desc { color: #d1d5db; /* text-neutral-300 */ }
+  .dark .timeline-desc { color: #d1d5db; }
 
   .timeline-node {
     @apply rounded-full border;
-    width: 1.25rem;  /* w-5 */
-    height: 1.25rem; /* h-5 */
-    background-color: #ffffff; /* bg-white */
-    border-color: rgba(0, 0, 0, 0.10); /* border-black/10 */
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: #ffffff;
+    border-color: rgba(0, 0, 0, 0.10);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     position: relative;
   }
   @media (min-width: 768px) {
-    .timeline-node { width: 1.5rem; height: 1.5rem; } /* md:w-6 md:h-6 */
+    .timeline-node { width: 1.5rem; height: 1.5rem; }
   }
   .dark .timeline-node {
-    background-color: #0d0f10;                    /* 深色节点底 */
-    border-color: rgba(255, 255, 255, 0.15);      /* dark:border-white/15 */
+    background-color: #0d0f10;
+    border-color: rgba(255, 255, 255, 0.15);
   }
 
   .timeline-node-inner {
     position: absolute;
-    inset: 4px;       /* inset-[4px] */
+    inset: 4px;
     border-radius: 9999px;
-    background-image: linear-gradient(to bottom, #e5e7eb, #d1d5db); /* from-neutral-200 to-neutral-300 */
+    background-image: linear-gradient(to bottom, #e5e7eb, #d1d5db);
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.7),
       inset 0 -1px 0 rgba(0,0,0,0.18);
@@ -179,12 +169,7 @@ html, body {
   }
 }
 
-/* 统一动效曲线（通用工具类，可在组件中使用） */
+/* ================= 通用工具类 ================= */
 .ease-smooth {
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* 移动端动画降频（进一步节流） */
-@media (max-width: 768px) {
-  .animate-gradient-smooth { animation-duration: 40s; }
 }
