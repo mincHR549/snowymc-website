@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, MotionProps } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
 import { MotionDiv, MotionNav } from "./motion-safe";
+
+// ✅ 修复点：定义 MotionSpan
+const MotionSpan = motion("span");
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -138,7 +141,7 @@ export default function Navbar() {
 
                   {/* 🌈 动态彩色横栏 */}
                   {isActive && (
-                    <motion.span
+                    <MotionSpan
                       layoutId="nav-indicator"
                       transition={{
                         type: "spring",
@@ -146,7 +149,7 @@ export default function Navbar() {
                         damping: 30,
                       }}
                       className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400"
-                    ></motion.span>
+                    />
                   )}
                 </Link>
               );
