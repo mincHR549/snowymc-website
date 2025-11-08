@@ -124,40 +124,6 @@ export default function Contact() {
           ))}
         </MotionDiv>
 
-        {/* 社区介绍 */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="mt-12 relative backdrop-blur-xl bg-white/90 dark:bg-black/40 
-                     p-6 rounded-2xl border border-transparent shadow-sm
-                     before:absolute before:inset-0 before:rounded-2xl
-                     before:p-[2px] before:bg-gradient-to-r
-                     before:from-cyan-400 before:via-violet-400 before:to-pink-400
-                     before:opacity-100 before:-z-10"
-        >
-          <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-            我们的社区
-          </h3>
-          <p className="text-gray-700 dark:text-white/80">
-            SnowyMC 致力于打造一个开放、友好的 Minecraft 创作社区。  
-            无论你是开发者、美术师还是玩家，都能在这里找到归属感。
-          </p>
-          <div
-            aria-hidden="true"
-            className="mt-6 h-[2px] w-full rounded-full
-                       bg-gradient-to-r from-cyan-300 via-violet-300 to-pink-300
-                       dark:from-cyan-400 dark:via-violet-400 dark:to-pink-400"
-          />
-          <MotionP
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="mt-4 text-sm text-gray-600 dark:text-white/60"
-          >
-            如果你认同我们的理念，欢迎参与讨论与贡献，一起把有趣的想法变成稳定的作品。
-          </MotionP>
-        </MotionDiv>
       </main>
 
       <Footer />
