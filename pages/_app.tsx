@@ -22,6 +22,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           name="description"
           content="SnowyMC 官方网站，Minecraft 插件与像素美术创作。"
         />
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </Head>
 
       <AnimatePresence mode="wait">

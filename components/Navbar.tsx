@@ -77,7 +77,7 @@ export default function Navbar() {
             className="flex items-center gap-2 font-semibold tracking-tight text-black dark:text-white hover:scale-105 transition-transform"
           >
             <Image
-              src="/8.svg"
+              src="/favicon.svg"
               alt="SnowyMC Logo"
               width={32}
               height={32}
