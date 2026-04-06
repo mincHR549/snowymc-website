@@ -34,7 +34,7 @@ export default function Home() {
                         bg-gradient-to-tr from-cyan-400/15 via-violet-400/15 to-pink-400/15 
                         blur-3xl" />
 
-        {/* 标题 - 简化为淡入效果 */}
+        {/* 标题 - 简化为淡入效果 + 保留光效 */}
         <MotionH1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -44,6 +44,13 @@ export default function Home() {
                      bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400
                      dark:from-cyan-300 dark:via-violet-300 dark:to-pink-300
                      cursor-pointer select-none"
+          style={{
+            filter: `
+              drop-shadow(0 0 8px rgba(0, 217, 255, 0.6))
+              drop-shadow(0 0 16px rgba(147, 51, 234, 0.5))
+              drop-shadow(0 0 24px rgba(236, 72, 153, 0.4))
+            `
+          }}
         >
           SnowyMC
         </MotionH1>
