@@ -1,176 +1,165 @@
 "use client";
 
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import { FaComments, FaGithub, FaPlus, FaSearch } from "react-icons/fa";
+import { useEffect } from "react";
+import { FaComments, FaGithub, FaRocket, FaHeart } from "react-icons/fa";
 
 export default function Forum() {
-  const [repo, setRepo] = useState("");
-  const [repoId, setRepoId] = useState("");
-  const [category, setCategory] = useState("");
-  const [categoryId, setCategoryId] = useState("");
-  const [term, setTerm] = useState("");
-
-  // 默认配置（你可以更改这些）
-  const DEFAULT_REPO = "mincHR549/snowymc-website";
-  const DEFAULT_REPO_ID = ""; // 需要从 Giscus 官网获取
-  const DEFAULT_CATEGORY = "General";
-  const DEFAULT_CATEGORY_ID = ""; // 需要从 Giscus 官网获取
-
   useEffect(() => {
-    // 尝试从 localStorage 读取配置
-    const savedRepo = localStorage.getItem("giscus_repo") || DEFAULT_REPO;
-    const savedRepoId = localStorage.getItem("giscus_repo_id") || DEFAULT_REPO_ID;
-    const savedCategory = localStorage.getItem("giscus_category") || DEFAULT_CATEGORY;
-    const savedCategoryId = localStorage.getItem("giscus_category_id") || DEFAULT_CATEGORY_ID;
-
-    setRepo(savedRepo);
-    setRepoId(savedRepoId);
-    setCategory(savedCategory);
-    setCategoryId(savedCategoryId);
-
-    // 加载 Giscus script
-    if (!document.getElementById("giscus-script")) {
-      const script = document.createElement("script");
-      script.src = "https://giscus.app/client.js";
-      script.setAttribute("data-repo", savedRepo);
-      script.setAttribute("data-repo-id", savedRepoId || "REPO_ID_HERE");
-      script.setAttribute("data-category", savedCategory);
-      script.setAttribute("data-category-id", savedCategoryId || "CATEGORY_ID_HERE");
-      script.setAttribute("data-mapping", "pathname");
-      script.setAttribute("data-strict", "0");
-      script.setAttribute("data-reactions-enabled", "1");
-      script.setAttribute("data-emit-metadata", "0");
-      script.setAttribute("data-input-position", "top");
-      script.setAttribute("data-theme", "preferred_color_scheme");
-      script.setAttribute("data-lang", "zh-CN");
-      script.setAttribute("data-loading", "lazy");
-      script.crossOrigin = "anonymous";
-      script.async = true;
-      script.id = "giscus-script";
-      document.head.appendChild(script);
-    } else {
-      // 如果脚本已加载，更新配置
-      updateGiscusConfig(savedRepo, savedRepoId, savedCategory, savedCategoryId);
+    // 动态加载 Giscus
+    const existingScript = document.getElementById("giscus-script");
+    if (existingScript) {
+      existingScript.remove();
     }
+
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.setAttribute("data-repo", "mincHR549/snowymc-website");
+    script.setAttribute("data-repo-id", "R_kgDO"); // 需要替换为实际值
+    script.setAttribute("data-category", "General");
+    script.setAttribute("data-category-id", "DIC_kwDO"); // 需要替换为实际值
+    script.setAttribute("data-mapping", "pathname");
+    script.setAttribute("data-strict", "0");
+    script.setAttribute("data-reactions-enabled", "1");
+    script.setAttribute("data-emit-metadata", "0");
+    script.setAttribute("data-input-position", "top");
+    script.setAttribute("data-theme", "preferred_color_scheme");
+    script.setAttribute("data-lang", "zh-CN");
+    script.setAttribute("data-loading", "lazy");
+    script.crossOrigin = "anonymous";
+    script.async = true;
+    script.id = "giscus-script";
+    document.head.appendChild(script);
+
+    return () => {
+      const s = document.getElementById("giscus-script");
+      if (s) s.remove();
+    };
   }, []);
-
-  const updateGiscusConfig = (r: string, rid: string, c: string, cid: string) => {
-    const iframe = document.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
-    if (!iframe) return;
-
-    iframe.contentWindow?.postMessage(
-      {
-        giscus: {
-          setConfig: {
-            repo: r as `${string}/${string}`,
-            repoId: rid,
-            category: c,
-            categoryId: cid,
-            theme: window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
-          },
-        },
-      },
-      "https://giscus.app"
-    );
-  };
 
   return (
     <div className="min-h-screen relative">
       <Head>
         <title>论坛 - SnowyMC</title>
-        <meta name="description" content="SnowyMC 社区论坛" />
+        <meta name="description" content="SnowyMC 社区论坛 - 与开发者和其他玩家交流" />
       </Head>
 
-      <main className="relative max-w-5xl mx-auto pt-32 px-6 pb-20">
-        {/* 标题 */}
+      <main className="relative max-w-5xl mx-auto pt-32 px-4 pb-20">
+        {/* 标题区域 */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold">
-            <span className="bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
+          <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full 
+                          bg-gradient-to-r from-cyan-500/10 to-pink-500/10 
+                          border border-cyan-500/20 mb-6">
+            <FaComments className="text-2xl text-cyan-500" />
+            <span className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text text-transparent">
               社区论坛
             </span>
+          </div>
+          
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
+            <span className="bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
+              加入我们的社区
+            </span>
           </h1>
-          <p className="mt-4 text-gray-600 dark:text-white/60">
-            基于 GitHub Discussions 的免费无广告论坛
+          
+          <p className="text-gray-600 dark:text-white/60 max-w-xl mx-auto">
+            在这里你可以讨论插件开发、分享作品、提出问题，与其他开发者和玩家交流
           </p>
         </div>
 
-        {/* 功能说明卡片 */}
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <div className="p-6 rounded-2xl bg-white/80 dark:bg-white/5 backdrop-blur-sm 
-                          border border-black/5 dark:border-white/10 text-center">
-            <FaComments className="text-3xl mx-auto mb-3 text-cyan-500" />
-            <h3 className="font-semibold text-gray-800 dark:text-white">发帖讨论</h3>
-            <p className="text-sm text-gray-500 dark:text-white/50 mt-2">
-              创建话题，与社区成员交流
-            </p>
-          </div>
-          <div className="p-6 rounded-2xl bg-white/80 dark:bg-white/5 backdrop-blur-sm 
-                          border border-black/5 dark:border-white/10 text-center">
-            <FaGithub className="text-3xl mx-auto mb-3 text-violet-500" />
-            <h3 className="font-semibold text-gray-800 dark:text-white">GitHub 登录</h3>
-            <p className="text-sm text-gray-500 dark:text-white/50 mt-2">
-              使用 GitHub 账号登录，无需注册
-            </p>
-          </div>
-          <div className="p-6 rounded-2xl bg-white/80 dark:bg-white/5 backdrop-blur-sm 
-                          border border-black/5 dark:border-white/10 text-center">
-            <FaSearch className="text-3xl mx-auto mb-3 text-pink-500" />
-            <h3 className="font-semibold text-gray-800 dark:text-white">历史记录</h3>
-            <p className="text-sm text-gray-500 dark:text-white/50 mt-2">
-              话题永久保存，随时查阅
-            </p>
-          </div>
+        {/* 特性展示 */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+          {[
+            { icon: <FaGithub />, title: "GitHub 登录", desc: "使用 GitHub 账号直接登录", color: "from-gray-600 to-gray-800" },
+            { icon: <FaComments />, title: "自由讨论", desc: "创建话题，参与讨论", color: "from-cyan-500 to-blue-500" },
+            { icon: <FaComments />, title: "无广告", desc: "纯净的社区环境", color: "from-violet-500 to-purple-500" },
+            { icon: <FaHeart />, title: "免费使用", desc: "基于 GitHub Discussions", color: "from-pink-500 to-rose-500" },
+          ].map((item, i) => (
+            <div
+              key={i}
+              className="p-5 rounded-2xl bg-white/80 dark:bg-white/5 backdrop-blur-sm 
+                             border border-black/5 dark:border-white/10 text-center
+                             hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+            >
+              <div className={`w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-r ${item.color} flex items-center justify-center text-white text-xl`}>
+                {item.icon}
+              </div>
+              <h3 className="font-semibold text-gray-800 dark:text-white">{item.title}</h3>
+              <p className="text-xs text-gray-500 dark:text-white/50 mt-1">{item.desc}</p>
+            </div>
+          ))}
         </div>
 
-        {/* Giscus 论坛区域 */}
-        <div className="rounded-2xl bg-white/80 dark:bg-white/5 backdrop-blur-sm 
-                        border border-black/5 dark:border-white/10 overflow-hidden">
+        {/* 论坛主区域 */}
+        <div className="rounded-2xl bg-white/90 dark:bg-white/5 backdrop-blur-sm 
+                        border border-black/5 dark:border-white/10 overflow-hidden shadow-xl">
           {/* 顶部栏 */}
           <div className="px-6 py-4 border-b border-black/5 dark:border-white/10 
-                          flex items-center justify-between">
+                          flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <FaGithub className="text-xl text-gray-700 dark:text-white" />
-              <span className="font-semibold text-gray-800 dark:text-white">{repo || "mincHR549/snowymc-website"}</span>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500 flex items-center justify-center">
+                <FaGithub className="text-white text-lg" />
+              </div>
+              <div>
+                <h2 className="font-bold text-gray-800 dark:text-white">mincHR549/snowymc-website</h2>
+                <p className="text-xs text-gray-500 dark:text-white/50">GitHub Discussions</p>
+              </div>
             </div>
             <a
-              href={`https://github.com/${repo || "mincHR549/snowymc-website"}/discussions`}
+              href="https://github.com/mincHR549/snowymc-website/discussions"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-cyan-500 hover:text-cyan-400 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                         bg-gradient-to-r from-cyan-500 to-violet-500
+                         text-white text-sm font-medium
+                         hover:shadow-lg hover:shadow-cyan-500/25 transition-all"
             >
-              在 GitHub 上查看 →
+              <FaRocket className="text-sm" />
+              <span>在 GitHub 上访问</span>
             </a>
           </div>
 
-          {/* Giscus 嵌入 */}
-          <div className="giscus p-6" id="giscus-container">
-            {/* Giscus 会在这里加载 */}
-            <div className="text-center py-12 text-gray-500 dark:text-white/50">
-              <div className="animate-pulse">
-                <FaComments className="text-5xl mx-auto mb-4 text-gray-300 dark:text-white/20" />
-                <p>正在加载论坛...</p>
+          {/* Giscus 容器 */}
+          <div className="giscus p-6" />
+        </div>
+
+        {/* 配置提示 */}
+        <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 to-orange-500/10 
+                        border border-amber-500/20">
+          <h3 className="font-bold text-amber-600 dark:text-amber-400 mb-3 flex items-center gap-2">
+            <span>💡</span>
+            <span>论坛使用指南</span>
+          </h3>
+          <div className="space-y-3 text-sm text-gray-600 dark:text-white/70">
+            <p>
+              本论坛基于 <strong className="text-amber-500">Giscus</strong>（GitHub Discussions），免费、无广告、永久保存。
+            </p>
+            <div className="grid sm:grid-cols-2 gap-4 mt-4">
+              <div className="p-4 rounded-xl bg-white/50 dark:bg-black/30">
+                <h4 className="font-semibold text-gray-800 dark:text-white mb-2">🚀 快速开始</h4>
+                <ol className="text-xs space-y-1 list-decimal list-inside">
+                  <li>点击上方「在 GitHub 上访问」</li>
+                  <li>登录 GitHub 账号</li>
+                  <li>点击 New Discussion 创建话题</li>
+                </ol>
+              </div>
+              <div className="p-4 rounded-xl bg-white/50 dark:bg-black/30">
+                <h4 className="font-semibold text-gray-800 dark:text-white mb-2">📋 话题分类</h4>
+                <ul className="text-xs space-y-1 list-disc list-inside">
+                  <li><strong>General</strong> - 通用讨论</li>
+                  <li><strong>Q&A</strong> - 问答专区</li>
+                  <li><strong>Ideas</strong> - 创意建议</li>
+                </ul>
               </div>
             </div>
+            <p className="mt-4 text-xs text-gray-500 dark:text-white/40">
+              如果 Giscus 没有正常加载，请在 GitHub Discussions 中查看完整论坛内容。
+            </p>
           </div>
         </div>
 
-        {/* 配置说明 */}
-        <div className="mt-8 p-6 rounded-2xl bg-amber-500/10 border border-amber-500/20">
-          <h3 className="font-semibold text-amber-600 dark:text-amber-400 mb-2">
-            💡 如何配置论坛
-          </h3>
-          <ol className="text-sm text-gray-600 dark:text-white/70 space-y-1 list-decimal list-inside">
-            <li>打开 <a href="https://giscus.app" target="_blank" className="text-cyan-500 hover:underline">giscus.app</a> 官网</li>
-            <li>输入仓库：<code className="bg-black/10 px-1 rounded">mincHR549/snowymc-website</code></li>
-            <li>选择分类（需要先在 GitHub 创建 Discussions 分类）</li>
-            <li>复制生成的 <code className="bg-black/10 px-1 rounded">data-repo-id</code> 和 <code className="bg-black/10 px-1 rounded">data-category-id</code></li>
-            <li>在 GitHub 仓库设置中启用 Discussions 功能</li>
-          </ol>
-        </div>
-
         {/* 底部留白 */}
-        <div className="h-20" />
+        <div className="h-16" />
       </main>
     </div>
   );

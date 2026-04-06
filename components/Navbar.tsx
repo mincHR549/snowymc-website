@@ -1,159 +1,107 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
 import ThemeToggle from "./ThemeToggle";
-import { MotionDiv, MotionNav } from "./motion-safe";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [supportsBlur, setSupportsBlur] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    // 判断浏览器是否支持毛玻璃
-    setSupportsBlur(CSS.supports("backdrop-filter", "blur(4px)"));
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   const navLinks = [
+    { href: "/", label: "首页" },
     { href: "/about", label: "关于" },
     { href: "/projects", label: "项目" },
     { href: "/gallery", label: "美术" },
-    { href: "/contact", label: "联系" },
+    { href: "/forum", label: "论坛", highlight: true },
     { href: "/docs", label: "文档" },
+    { href: "/contact", label: "联系" },
   ];
 
   return (
-    <MotionNav
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="fixed top-0 left-0 w-full z-50"
-    >
-      <div
-        className={`relative mx-auto max-w-6xl rounded-2xl mt-3 overflow-hidden border
-                    transition-all duration-300 ${supportsBlur ? "backdrop-blur-sm" : ""}
-                    ${
-                      scrolled
-                        ? "bg-white/60 dark:bg-black/40 border-white/20 dark:border-white/10 shadow-lg"
-                        : "bg-white/30 dark:bg-black/30 border-white/10 dark:border-white/10 shadow-md"
-                    }`}
-        style={{
-          willChange: "transform, opacity, filter",
-          transform: "translate3d(0,0,0)",
-        }}
-      >
-        {/* 背景光效层 */}
-        <MotionDiv
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.15 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-        >
-          <div className="absolute -top-8 -left-10 w-40 h-40 rounded-full bg-cyan-400/10 blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-52 h-52 rounded-full bg-violet-400/10 blur-3xl"></div>
-        </MotionDiv>
-
-        {/* 内容层 */}
-        <MotionDiv
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-          className="flex items-center justify-between px-6 py-3 relative"
-        >
-          <Link
-            href="/"
-            className="flex items-center gap-2 font-semibold tracking-tight text-black dark:text-white hover:scale-105 transition-transform"
-          >
-            <Image
-              src="/favicon.svg"
-              alt="SnowyMC Logo"
-              width={32}
-              height={32}
-              className="w-8 h-8"
-            />
-            <span>SnowyMC</span>
-          </Link>
-
-          {/* 桌面导航 */}
-          <div className="hidden md:flex items-center gap-6 relative">
-            {navLinks.map((link) => {
-              const isActive = router.pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`relative text-sm transition ${
-                    isActive
-                      ? "text-cyan-500 dark:text-cyan-400 font-semibold"
-                      : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
-                  }`}
-                >
-                  {link.label}
-                  {isActive && (
-                    <span className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400"></span>
-                  )}
-                </Link>
-              );
-            })}
-            <ThemeToggle />
-          </div>
-
-          {/* 移动菜单按钮 */}
-          <button
-            className="md:hidden text-2xl text-black dark:text-white"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Toggle Menu"
-          >
-            {menuOpen ? <FiX /> : <FiMenu />}
-          </button>
-        </MotionDiv>
-      </div>
-
-      {/* 移动端菜单 */}
-      <AnimatePresence>
-        {menuOpen && (
-          <MotionDiv
-            key="mobile-menu"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="md:hidden absolute top-[70px] left-0 w-full px-6"
-          >
-            <div
-              className={`relative rounded-2xl overflow-hidden border ${
-                supportsBlur ? "backdrop-blur-sm" : ""
-              } bg-white/70 dark:bg-black/60 border-white/20 dark:border-white/10 shadow-md`}
+    <nav className="fixed top-0 left-0 w-full z-50">
+      <div className="mx-auto max-w-6xl px-4 pt-3">
+        <div className="relative rounded-2xl overflow-hidden
+                        bg-white/80 dark:bg-black/60 backdrop-blur-md
+                        border border-black/5 dark:border-white/10
+                        shadow-lg">
+          <div className="flex items-center justify-between px-5 py-3">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="flex items-center gap-2 font-bold tracking-tight text-black dark:text-white hover:scale-105 transition-transform"
             >
-              <MotionDiv
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                className="flex flex-col gap-4 p-6"
-              >
+              <Image
+                src="/favicon.svg"
+                alt="SnowyMC Logo"
+                width={32}
+                height={32}
+                className="w-8 h-8"
+              />
+              <span>SnowyMC</span>
+            </Link>
+
+            {/* 桌面导航 */}
+            <div className="hidden lg:flex items-center gap-5">
+              {navLinks.map((link) => {
+                const isActive = router.pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`relative text-sm transition-all ${
+                      link.highlight
+                        ? "px-4 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/25"
+                        : isActive
+                          ? "text-cyan-500 dark:text-cyan-400 font-semibold"
+                          : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
+                    }`}
+                  >
+                    {link.highlight && <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400/20 to-violet-400/20" />}
+                    <span className="relative">{link.label}</span>
+                    {!link.highlight && isActive && (
+                      <span className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400" />
+                    )}
+                  </Link>
+                );
+              })}
+              <ThemeToggle />
+            </div>
+
+            {/* 移动端菜单按钮 */}
+            <button
+              className="lg:hidden text-xl text-black dark:text-white"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label="Toggle Menu"
+            >
+              {menuOpen ? <FiX /> : <FiMenu />}
+            </button>
+          </div>
+        </div>
+
+        {/* 移动端菜单 */}
+        {menuOpen && (
+          <div className="lg:hidden mt-2 mx-2">
+            <div className="rounded-2xl overflow-hidden
+                            bg-white/90 dark:bg-black/80 backdrop-blur-md
+                            border border-black/5 dark:border-white/10
+                            shadow-lg">
+              <div className="flex flex-col gap-1 p-4">
                 {navLinks.map((link) => {
                   const isActive = router.pathname === link.href;
                   return (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`relative text-base transition ${
-                        isActive
-                          ? "text-cyan-500 dark:text-cyan-400 font-semibold"
-                          : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
+                      className={`px-4 py-3 rounded-xl text-base transition-all ${
+                        link.highlight
+                          ? "bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold"
+                          : isActive
+                            ? "text-cyan-500 dark:text-cyan-400 font-semibold bg-cyan-500/10"
+                            : "text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
                       }`}
                       onClick={() => setMenuOpen(false)}
                     >
@@ -161,12 +109,14 @@ export default function Navbar() {
                     </Link>
                   );
                 })}
-                <ThemeToggle />
-              </MotionDiv>
+                <div className="pt-2 border-t border-black/10 dark:border-white/10">
+                  <ThemeToggle />
+                </div>
+              </div>
             </div>
-          </MotionDiv>
+          </div>
         )}
-      </AnimatePresence>
-    </MotionNav>
+      </div>
+    </nav>
   );
 }

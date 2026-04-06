@@ -3,19 +3,14 @@
 import { FaGithub, FaQq } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, MotionProps } from "framer-motion";
-import React from "react";
-
-// MotionButton 封装，解决 TS 类型问题
-type MotionButtonProps = MotionProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
-const MotionButton: React.FC<MotionButtonProps> = (props) => <motion.button {...props} />;
+import Link from "next/link";
 
 export default function Footer() {
   const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowTop(window.scrollY > 200); // 滚动超过 200px 显示按钮
+      setShowTop(window.scrollY > 200);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -31,10 +26,26 @@ export default function Footer() {
                       backdrop-blur-xl bg-white/60 border border-black/10
                       dark:bg-black/30 dark:border-white/20 text-center">
         
-        {/* 品牌标语 */}
-        <p className="text-gray-800 dark:text-white font-semibold mb-4">
-          SnowyMC — 技术与美学的交汇
-        </p>
+        {/* 快速链接 */}
+        <div className="flex justify-center gap-6 text-sm mb-6 flex-wrap">
+          {[
+            { href: "/", label: "首页" },
+            { href: "/about", label: "关于" },
+            { href: "/projects", label: "项目" },
+            { href: "/gallery", label: "美术" },
+            { href: "/forum", label: "论坛" },
+            { href: "/docs", label: "文档" },
+            { href: "/contact", label: "联系" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-gray-600 dark:text-white/60 hover:text-cyan-500 transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
 
         {/* 渐变分隔线 */}
         <div className="mx-auto my-4 h-[2px] w-32 rounded-full 
@@ -66,28 +77,21 @@ export default function Footer() {
         </p>
       </div>
 
-      {/* 返回顶部按钮（带动画） */}
-      <AnimatePresence>
-        {showTop && (
-          <MotionButton
-            key="back-to-top"
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            onClick={scrollToTop}
-            className="fixed bottom-6 right-6 p-3 rounded-full
-                       bg-white/80 dark:bg-black/60
-                       border border-black/10 dark:border-white/20
-                       shadow-lg backdrop-blur-xl
-                       hover:scale-110 hover:shadow-[0_0_20px_rgba(34,211,238,0.35)]
-                       transition-transform"
-            aria-label="返回顶部"
-          >
-            <FaArrowUp className="text-cyan-500 dark:text-cyan-400" />
-          </MotionButton>
-        )}
-      </AnimatePresence>
+      {/* 返回顶部按钮 */}
+      {showTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 p-3 rounded-full
+                     bg-white/80 dark:bg-black/60
+                     border border-black/10 dark:border-white/20
+                     shadow-lg backdrop-blur-xl
+                     hover:scale-110 hover:shadow-[0_0_20px_rgba(34,211,238,0.35)]
+                     transition-all"
+          aria-label="返回顶部"
+        >
+          <FaArrowUp className="text-cyan-500 dark:text-cyan-400" />
+        </button>
+      )}
     </footer>
   );
 }
