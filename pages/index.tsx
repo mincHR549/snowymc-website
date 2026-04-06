@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Typewriter } from "react-simple-typewriter";
 import { MotionH1, MotionDiv, MotionP } from "../components/motion-safe";
-import Timeline from "../components/Timeline"; // 引入新的时间轴组件
+import Timeline from "../components/Timeline";
 
 export default function Home() {
   return (
@@ -28,37 +28,22 @@ export default function Home() {
       <Navbar />
 
       <main className="relative flex flex-col items-center justify-center min-h-screen text-center px-6">
-        {/* 动态渐变圈背景 */}
-        <MotionDiv
-          initial={{ rotate: 0 }}
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-                     w-[700px] h-[700px] md:w-[800px] md:h-[800px] rounded-full 
-                     bg-gradient-to-tr from-cyan-400/18 via-violet-400/18 to-pink-400/18 
-                     blur-3xl"
-        />
+        {/* 简化渐变圈 - 静态，减少GPU消耗 */}
+        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+                        w-[600px] h-[600px] md:w-[700px] md:h-[700px] rounded-full 
+                        bg-gradient-to-tr from-cyan-400/15 via-violet-400/15 to-pink-400/15 
+                        blur-3xl" />
 
-        {/* 标题 */}
+        {/* 标题 - 简化为淡入效果 */}
         <MotionH1
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          whileHover={{ scale: 1.08 }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           className="relative mt-24 text-5xl md:text-7xl font-extrabold tracking-tight 
                      text-transparent bg-clip-text 
                      bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400
                      dark:from-cyan-300 dark:via-violet-300 dark:to-pink-300
                      cursor-pointer select-none"
-          style={{
-            filter: `
-              drop-shadow(0 0 2px rgba(255,255,255,0.4))
-              drop-shadow(0 0 6px rgba(147,51,234,0.55))
-              drop-shadow(0 0 12px rgba(147,51,234,0.45))
-              drop-shadow(0 0 18px rgba(236,72,153,0.45))
-            `,
-            transition: "filter .3s ease"
-          }}
         >
           SnowyMC
         </MotionH1>
@@ -67,7 +52,7 @@ export default function Home() {
         <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
           className="mt-6 w-full max-w-xl mx-auto rounded-xl 
                      bg-black/80 text-green-400 font-mono text-left text-sm 
                      px-5 md:px-6 py-4 shadow-lg"
@@ -91,13 +76,13 @@ export default function Home() {
 
         {/* 简介段落 */}
         <MotionP
-          initial={{ y: 40, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.7 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
           className="mt-6 text-base md:text-xl max-w-2xl
                      text-gray-700 dark:text-white/80
-                     backdrop-blur-xl bg-white/90 dark:bg-black/40
-                     px-5 md:px-6 py-4 rounded-2xl border border-black/10 dark:border-white/20"
+                     bg-white/80 dark:bg-black/50 backdrop-blur-sm
+                     px-5 md:px-6 py-4 rounded-2xl border border-black/5 dark:border-white/10"
         >
           专注于 Minecraft 插件开发与像素美术创作，用技术与美学打造独特的游戏体验。
         </MotionP>
@@ -105,47 +90,13 @@ export default function Home() {
         {/* 时间轴 */}
         <Timeline />
 
-        {/* 漂浮光球装饰 */}
-        <MotionDiv
-          animate={{ x: [0, 30, -20, 0], y: [0, -20, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }}
-          className="pointer-events-none hidden md:block absolute right-10 bottom-40 
-                     w-28 h-28 lg:w-32 lg:h-32 rounded-full 
-                     bg-gradient-to-tr from-cyan-400 via-violet-400 to-pink-400 
-                     blur-3xl opacity-55"
-        />
-        <MotionDiv
-          animate={{ x: [0, -25, 15, 0], y: [0, 15, -10, 0] }}
-          transition={{ repeat: Infinity, duration: 25, ease: "easeInOut" }}
-          className="pointer-events-none hidden md:block absolute left-10 top-60 
-                     w-16 h-16 lg:w-20 lg:h-20 rounded-full 
-                     bg-gradient-to-tr from-pink-400 via-violet-400 to-cyan-400 
-                     blur-2xl opacity-45"
-        />
-        <MotionDiv
-          animate={{ x: [0, 20, -15, 0], y: [0, -10, 15, 0] }}
-          transition={{ repeat: Infinity, duration: 30, ease: "easeInOut" }}
-          className="pointer-events-none hidden md:block absolute right-1/3 top-96 
-                     w-14 h-14 rounded-full 
-                     bg-gradient-to-tr from-violet-400 via-cyan-400 to-pink-400 
-                     blur-xl opacity-40"
-        />
-        <MotionDiv
-          animate={{ x: [0, 12, -8, 0], y: [0, -10, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
-          className="pointer-events-none md:hidden absolute right-6 bottom-28 
-                     w-16 h-16 rounded-full 
-                     bg-gradient-to-tr from-cyan-400 via-violet-400 to-pink-400 
-                     blur-xl opacity-45"
-        />
-        <MotionDiv
-          animate={{ x: [0, -10, 6, 0], y: [0, 8, -6, 0] }}
-          transition={{ repeat: Infinity, duration: 18, ease: "easeInOut" }}
-          className="pointer-events-none md:hidden absolute left-6 top-48 
-                     w-12 h-12 rounded-full 
-                     bg-gradient-to-tr from-pink-400 via-violet-400 to-cyan-400 
-                     blur-lg opacity-40"
-        />
+        {/* 简化装饰 - 仅桌面端显示，静态 */}
+        <div className="pointer-events-none hidden md:block absolute right-10 bottom-40 
+                        w-24 h-24 lg:w-28 lg:h-28 rounded-full 
+                        bg-gradient-to-tr from-cyan-400/30 to-pink-400/30 blur-2xl" />
+        <div className="pointer-events-none hidden md:block absolute left-10 top-60 
+                        w-20 h-20 rounded-full 
+                        bg-gradient-to-tr from-pink-400/30 to-violet-400/30 blur-2xl" />
       </main>
 
       <Footer />

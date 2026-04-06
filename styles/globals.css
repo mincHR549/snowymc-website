@@ -2,63 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================= 动画定义 ================= */
-
-/* 动态渐变动画 */
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* 光晕浮动动画（老版兼容） */
-@keyframes float {
-  0%, 100% { transform: translate3d(0,0,0); }
-  50% { transform: translate3d(12px,-12px,0); }
-}
-
-/* 柔和流动渐变动画（新版） */
-@keyframes gradient-smooth {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* 呼吸漂浮动画（新版） */
-@keyframes float-breath {
-  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.8; }
-  50% { transform: translate3d(0, -15px, 0); opacity: 1; }
-}
-
-/* ================= 动画类扩展 ================= */
-
-.animate-gradient {
-  animation: gradient 16s ease-in-out infinite;
-  background-size: 400% 400%;
-  will-change: background-position;
-}
-.bg-400% { background-size: 400% 400%; }
-
-.animate-float {
-  animation: float 10s ease-in-out infinite;
-  will-change: transform;
-}
-
-.animate-gradient-smooth {
-  animation: gradient-smooth 20s ease-in-out infinite;
-  will-change: background-position;
-}
-
-.animate-float-breath {
-  animation: float-breath 8s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
-/* 移动端动画降频（节流优化） */
-@media (max-width: 768px) {
-  .animate-gradient-smooth { animation-duration: 30s; }
-  .animate-float-breath { animation-duration: 12s; }
-}
-
 /* ================= 全局样式 ================= */
 
 html, body, #__next { height: 100%; }
@@ -98,29 +41,22 @@ html, body { font-family: var(--font-sans); }
   -webkit-backdrop-filter: saturate(130%) contrast(105%) blur(1px);
 }
 
-/* 柔化模糊 */
-.blur-soft { filter: blur(80px); }
-
-/* ================= 组件：Apple 风格 Timeline ================= */
+/* ================= 组件：Timeline ================= */
 @layer components {
   .timeline-card {
-    @apply rounded-2xl px-6 py-4 border shadow transition-transform duration-150;
-    background-color: rgba(255, 255, 255, 0.80);
-    border-color: rgba(0, 0, 0, 0.05);
-    box-shadow:
-      0 1px 0 rgba(0, 0, 0, 0.06),
-      0 12px 28px rgba(0, 0, 0, 0.08);
+    @apply rounded-2xl px-6 py-4 border transition-transform duration-150;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
     transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
   .dark .timeline-card {
-    background-color: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.10);
+    background-color: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.08);
   }
   .timeline-card:hover {
-    transform: translate3d(0, -2px, 0);
-    box-shadow:
-      0 1px 0 rgba(0, 0, 0, 0.06),
-      0 16px 40px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   }
 
   .timeline-title {
@@ -137,35 +73,32 @@ html, body { font-family: var(--font-sans); }
 
   .timeline-node {
     @apply rounded-full border;
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 0.75rem;
+    height: 0.75rem;
     background-color: #ffffff;
-    border-color: rgba(0, 0, 0, 0.10);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: relative;
   }
   @media (min-width: 768px) {
-    .timeline-node { width: 1.5rem; height: 1.5rem; }
+    .timeline-node { width: 0.875rem; height: 0.875rem; }
   }
   .dark .timeline-node {
-    background-color: #0d0f10;
+    background-color: #1a1d1f;
     border-color: rgba(255, 255, 255, 0.15);
   }
 
   .timeline-node-inner {
     position: absolute;
-    inset: 4px;
+    inset: 3px;
     border-radius: 9999px;
     background-image: linear-gradient(to bottom, #e5e7eb, #d1d5db);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.7),
-      inset 0 -1px 0 rgba(0,0,0,0.18);
   }
   @media (min-width: 768px) {
-    .timeline-node-inner { inset: 5px; }
+    .timeline-node-inner { inset: 4px; }
   }
   .dark .timeline-node-inner {
-    background-image: linear-gradient(to bottom, #151718, #1a1d1f);
+    background-image: linear-gradient(to bottom, #27292b, #313336);
   }
 }
 
@@ -174,32 +107,10 @@ html, body { font-family: var(--font-sans); }
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* 柔和呼吸感 */
-@keyframes breath {
-  0%, 100% { opacity: 0.95; filter: brightness(1); }
-  50% { opacity: 1; filter: brightness(1.15); }
-}
-.animate-breath {
-  animation: breath 4s ease-in-out infinite;
-}
-
-/* 光泽扫过 */
-.shine-text {
-  position: relative;
-  display: inline-block;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.5) 50%,
-    rgba(255,255,255,0) 100%
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: shine 6s linear infinite;
-}
-
-@keyframes shine {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* 移动端优化 */
+@media (max-width: 768px) {
+  /* 减少移动端模糊效果 */
+  .blur-xl { filter: blur(12px); }
+  .blur-2xl { filter: blur(24px); }
+  .blur-3xl { filter: blur(40px); }
 }
