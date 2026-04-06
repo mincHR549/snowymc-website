@@ -12,13 +12,12 @@ export default function Navbar() {
   const router = useRouter();
 
   const navLinks = [
-    { href: "/", label: "首页" },
-    { href: "/about", label: "关于" },
-    { href: "/projects", label: "项目" },
-    { href: "/gallery", label: "美术" },
-    { href: "/forum", label: "论坛", highlight: true },
-    { href: "/docs", label: "文档" },
-    { href: "/contact", label: "联系" },
+    { href: "/", label: "首页", icon: "🏠" },
+    { href: "/about", label: "关于", icon: "👥" },
+    { href: "/projects", label: "项目", icon: "📦" },
+    { href: "/gallery", label: "美术", icon: "🎨" },
+    { href: "/docs", label: "文档", icon: "📚" },
+    { href: "/contact", label: "联系", icon: "📧" },
   ];
 
   return (
@@ -53,16 +52,14 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     className={`relative text-sm transition-all ${
-                      link.highlight
-                        ? "px-4 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/25"
-                        : isActive
-                          ? "text-cyan-500 dark:text-cyan-400 font-semibold"
-                          : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
+                      isActive
+                        ? "text-cyan-500 dark:text-cyan-400 font-semibold"
+                        : "text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
                     }`}
                   >
-                    {link.highlight && <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-400/20 to-violet-400/20" />}
+
                     <span className="relative">{link.label}</span>
-                    {!link.highlight && isActive && (
+                    {isActive && (
                       <span className="absolute left-0 -bottom-1 w-full h-[2px] rounded bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400" />
                     )}
                   </Link>
@@ -82,13 +79,13 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* 移动端菜单 */}
+        {/* 移动端菜单 - 论坛高亮显示 */}
         {menuOpen && (
           <div className="lg:hidden mt-2 mx-2">
             <div className="rounded-2xl overflow-hidden
                             bg-white/90 dark:bg-black/80 backdrop-blur-md
                             border border-black/5 dark:border-white/10
-                            shadow-lg">
+                            shadow-lg max-h-[70vh] overflow-y-auto">
               <div className="flex flex-col gap-1 p-4">
                 {navLinks.map((link) => {
                   const isActive = router.pathname === link.href;
@@ -96,20 +93,20 @@ export default function Navbar() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className={`px-4 py-3 rounded-xl text-base transition-all ${
-                        link.highlight
-                          ? "bg-gradient-to-r from-cyan-500 to-violet-500 text-white font-semibold"
-                          : isActive
-                            ? "text-cyan-500 dark:text-cyan-400 font-semibold bg-cyan-500/10"
-                            : "text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
+                      className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base transition-all ${
+                        isActive
+                          ? "text-cyan-500 dark:text-cyan-400 font-semibold bg-cyan-500/10"
+                          : "text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5"
                       }`}
                       onClick={() => setMenuOpen(false)}
                     >
-                      {link.label}
+                      <span>{link.icon}</span>
+                      <span>{link.label}</span>
+
                     </Link>
                   );
                 })}
-                <div className="pt-2 border-t border-black/10 dark:border-white/10">
+                <div className="pt-3 mt-2 border-t border-black/10 dark:border-white/10">
                   <ThemeToggle />
                 </div>
               </div>

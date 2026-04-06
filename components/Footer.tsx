@@ -33,7 +33,6 @@ export default function Footer() {
             { href: "/about", label: "关于" },
             { href: "/projects", label: "项目" },
             { href: "/gallery", label: "美术" },
-            { href: "/forum", label: "论坛" },
             { href: "/docs", label: "文档" },
             { href: "/contact", label: "联系" },
           ].map((link) => (
