@@ -3,7 +3,6 @@
 
 import Head from "next/head";
 import Link from "next/link";
-import { MotionDiv, MotionH2, MotionP } from "../components/motion-safe";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 export default function Projects() {
@@ -16,12 +15,7 @@ export default function Projects() {
 
       <main className="relative max-w-5xl mx-auto pt-32 px-6 pb-20">
         {/* 标题 */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold">
             <span className="bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
               我们的项目
@@ -30,7 +24,7 @@ export default function Projects() {
           <p className="mt-4 text-gray-600 dark:text-white/60">
             从插件到服务器，探索无限可能
           </p>
-        </MotionDiv>
+        </div>
 
         {/* 项目卡片 */}
         <div className="grid md:grid-cols-2 gap-6">
@@ -63,16 +57,13 @@ export default function Projects() {
               link: "#",
               color: "from-orange-500 to-amber-500"
             },
-          ].map((project, i) => (
-            <MotionDiv
+          ].map((project) => (
+            <div
               key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * i, duration: 0.5 }}
               className="group relative overflow-hidden rounded-2xl
                          bg-white/80 dark:bg-white/5 backdrop-blur-sm
-                         border border-black/5 dark:border-white/10
-                         shadow-lg hover:shadow-2xl transition-all duration-300"
+                         border border-black/5 dark:border-white/10 shadow-lg
+                         hover:shadow-2xl transition-all duration-300"
             >
               {/* 顶部渐变条 */}
               <div className={`h-1.5 bg-gradient-to-r ${project.color}`} />
@@ -110,7 +101,7 @@ export default function Projects() {
                   ))}
                 </div>
               </div>
-            </MotionDiv>
+            </div>
           ))}
         </div>
 

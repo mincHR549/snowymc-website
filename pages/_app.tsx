@@ -1,7 +1,6 @@
 // pages/_app.tsx
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "next-themes";
 import Head from "next/head";
@@ -25,28 +24,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </Head>
 
-      {/* 全局背景 - 固定，不随页面切换而重绘 */}
+      {/* 全局背景 - 固定不动，不参与动画 */}
       <GlobalBackground />
 
-      {/* 页面过渡动画 */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={router.asPath}
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-        >
-          {/* 固定导航栏 */}
-          <Navbar />
-          
-          {/* 页面内容 */}
-          <Component {...pageProps} />
-          
-          {/* 页脚 */}
-          <Footer />
-        </motion.div>
-      </AnimatePresence>
+      {/* 固定导航 */}
+      <Navbar />
+
+      {/* 页面内容 - 直接渲染，无过渡动画避免闪烁 */}
+      <Component {...pageProps} />
+
+      {/* 页脚 */}
+      <Footer />
     </ThemeProvider>
   );
 }

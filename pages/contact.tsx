@@ -2,7 +2,6 @@
 "use client";
 
 import Head from "next/head";
-import { MotionDiv, MotionH2 } from "../components/motion-safe";
 import { FaGithub, FaQq, FaDiscord, FaForumbee } from "react-icons/fa";
 
 export default function Contact() {
@@ -15,11 +14,7 @@ export default function Contact() {
 
       <main className="relative max-w-3xl mx-auto pt-32 px-6 pb-20 text-center">
         {/* 标题 */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <div>
           <h1 className="text-4xl md:text-5xl font-extrabold">
             <span className="bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
               联系我们
@@ -28,7 +23,7 @@ export default function Contact() {
           <p className="mt-4 text-gray-600 dark:text-white/60">
             有问题或建议？期待与你的交流！
           </p>
-        </MotionDiv>
+        </div>
 
         {/* 联系方式卡片 */}
         <div className="mt-12 grid sm:grid-cols-2 gap-4">
@@ -65,29 +60,22 @@ export default function Contact() {
               color: "hover:text-indigo-500",
               bg: "bg-indigo-500/10 border-indigo-500/20"
             },
-          ].map((item, i) => (
-            <MotionDiv
+          ].map((item) => (
+            <a
               key={item.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * i, duration: 0.5 }}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`block p-6 rounded-2xl ${item.bg}
+                         border backdrop-blur-sm
+                         hover:scale-105 transition-all duration-300 hover:shadow-lg group`}
             >
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`block p-6 rounded-2xl ${item.bg}
-                           border backdrop-blur-sm
-                           hover:scale-105 transition-all duration-300
-                           hover:shadow-lg group`}
-              >
-                <div className={`text-gray-600 dark:text-white/80 ${item.color} transition-colors mb-2`}>
-                  {item.icon}
-                </div>
-                <div className="font-semibold text-gray-800 dark:text-white">{item.title}</div>
-                <div className="text-sm text-gray-500 dark:text-white/50 mt-1">{item.desc}</div>
-              </a>
-            </MotionDiv>
+              <div className={`text-gray-600 dark:text-white/80 ${item.color} transition-colors mb-2`}>
+                {item.icon}
+              </div>
+              <div className="font-semibold text-gray-800 dark:text-white">{item.title}</div>
+              <div className="text-sm text-gray-500 dark:text-white/50 mt-1">{item.desc}</div>
+            </a>
           ))}
         </div>
 
