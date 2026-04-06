@@ -3,178 +3,124 @@
 
 import Head from "next/head";
 import Link from "next/link";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import { docCategories } from "../../data/docs";
-import { MotionDiv, MotionH1, MotionP } from "../../components/motion-safe";
+import { MotionDiv, MotionH1 } from "../../components/motion-safe";
+import { FaRocket, FaCode, FaServer, FaBook } from "react-icons/fa";
 
 export default function DocsIndex() {
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative">
       <Head>
         <title>文档中心 - SnowyMC</title>
-        <meta
-          name="description"
-          content="SnowyMC 官方文档中心，包含插件开发教程、服务器运维指南等内容。"
-        />
-        <meta name="keywords" content="SnowyMC, 文档, Minecraft, 插件开发, 教程" />
-        <meta property="og:title" content="SnowyMC 文档中心" />
-        <meta property="og:description" content="官方文档中心" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.snowymc.top/docs" />
+        <meta name="description" content="SnowyMC 官方文档中心" />
       </Head>
 
-      <Navbar />
-
-      {/* 背景光晕 */}
-      <MotionDiv
-        initial={{ rotate: 0 }}
-        animate={{ rotate: 360 }}
-        transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
-        aria-hidden="true"
-        className="absolute top-[120px] left-1/2 -translate-x-1/2 w-[800px] h-[800px]
-                   rounded-full blur-3xl pointer-events-none
-                   bg-gradient-to-tr from-cyan-400/18 via-violet-400/18 to-pink-400/18"
-      />
-
-      <main className="relative max-w-6xl mx-auto pt-32 px-6">
+      <main className="relative max-w-5xl mx-auto pt-32 px-6 pb-20">
         {/* 标题 */}
-        <MotionH1
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-extrabold text-center mb-6
-                     text-transparent bg-clip-text 
-                     bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400
-                     dark:from-cyan-300 dark:via-violet-300 dark:to-pink-300"
+        <MotionDiv
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
         >
-          文档中心
-        </MotionH1>
+          <h1 className="text-4xl md:text-5xl font-extrabold">
+            <span className="bg-gradient-to-r from-cyan-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
+              文档中心
+            </span>
+          </h1>
+          <p className="mt-4 text-gray-600 dark:text-white/60 max-w-2xl mx-auto">
+            插件开发教程、服务器运维指南、API文档 - 从入门到精通
+          </p>
+        </MotionDiv>
 
-        {/* 简介 */}
-        <MotionP
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-center text-gray-700 dark:text-white/80
-                     backdrop-blur-xl bg-white/85 dark:bg-black/40
-                     px-6 py-6 rounded-2xl border border-black/10 dark:border-white/15
-                     shadow-sm mb-12 max-w-3xl mx-auto"
-        >
-          这里汇集了 SnowyMC 团队的所有技术文档、插件开发教程和服务器运维指南。
-          无论你是新手还是老手，都能找到你需要的内容。
-        </MotionP>
-
-        {/* 分类卡片 */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {docCategories.map((category, catIndex) => (
+        {/* 文档分类 */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            {
+              icon: <FaRocket className="text-3xl" />,
+              title: "快速开始",
+              count: 3,
+              href: "/docs/quick-start",
+              color: "from-cyan-500 to-blue-500"
+            },
+            {
+              icon: <FaCode className="text-3xl" />,
+              title: "插件开发",
+              count: 4,
+              href: "/docs/basic-concepts",
+              color: "from-violet-500 to-purple-500"
+            },
+            {
+              icon: <FaServer className="text-3xl" />,
+              title: "服务器运维",
+              count: 2,
+              href: "/docs/server-setup",
+              color: "from-pink-500 to-rose-500"
+            },
+            {
+              icon: <FaBook className="text-3xl" />,
+              title: "API 参考",
+              count: 5,
+              href: "/docs/config-files",
+              color: "from-orange-500 to-amber-500"
+            },
+          ].map((category, i) => (
             <MotionDiv
-              key={category.id}
-              initial={{ opacity: 0, y: 40 }}
+              key={category.title}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * catIndex, duration: 0.5 }}
-              className="group relative backdrop-blur-xl bg-white/90 dark:bg-black/40 
-                         rounded-2xl border border-transparent hover:border-transparent
-                         p-6 shadow-lg hover:shadow-xl
-                         before:absolute before:inset-0 before:rounded-2xl
-                         before:p-[2px] before:bg-gradient-to-r
-                         before:from-cyan-400 before:via-violet-400 before:to-pink-400
-                         before:opacity-0 group-hover:before:opacity-100
-                         before:transition before:duration-500 before:-z-10
-                         transition-all duration-300"
+              transition={{ delay: 0.1 * i, duration: 0.5 }}
             >
-              {/* 图标 */}
-              <div className="text-4xl mb-4">{category.icon}</div>
-              
-              {/* 标题 */}
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                {category.name}
-              </h2>
-              
-              {/* 描述 */}
-              <p className="text-sm text-gray-600 dark:text-white/70 mb-4">
-                {category.description}
-              </p>
-              
-              {/* 文档数量 */}
-              <div className="text-xs text-cyan-500 dark:text-cyan-400 font-medium">
-                {category.docs.length} 篇文档
-              </div>
-              
-              {/* 文档列表 */}
-              <div className="mt-4 space-y-2">
-                {category.docs.map((docSlug, docIndex) => {
-                  const doc = getDocBySlugSafe(docSlug);
-                  return (
-                    <Link
-                      key={docSlug}
-                      href={`/docs/${docSlug}`}
-                      className="flex items-center justify-between p-2 rounded-lg
-                                 hover:bg-white/50 dark:hover:bg-white/10
-                                 transition-colors text-sm"
-                    >
-                      <span className="text-gray-700 dark:text-white/80">
-                        {doc?.title || docSlug}
-                      </span>
-                      <span className="text-cyan-400">→</span>
-                    </Link>
-                  );
-                })}
-              </div>
+              <Link
+                href={category.href}
+                className="block p-6 rounded-2xl
+                           bg-white/80 dark:bg-white/5 backdrop-blur-sm
+                           border border-black/5 dark:border-white/10
+                           shadow-lg hover:shadow-xl transition-all duration-300
+                           hover:-translate-y-1 group"
+              >
+                {/* 顶部渐变条 */}
+                <div className={`h-1 mb-4 rounded-full bg-gradient-to-r ${category.color} opacity-80`} />
+                
+                <div className={`mb-3 text-cyan-500`}>{category.icon}</div>
+                <div className="font-bold text-gray-800 dark:text-white">{category.title}</div>
+                <div className="text-sm text-gray-500 dark:text-white/50 mt-1">
+                  {category.count} 篇文档
+                </div>
+              </Link>
             </MotionDiv>
           ))}
         </div>
 
         {/* 快速链接 */}
         <MotionDiv
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mt-16 text-center"
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="mt-12 text-center"
         >
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            快速链接
-          </h3>
+          <p className="text-gray-500 dark:text-white/50 mb-4">快速开始</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <Link
               href="/docs/quick-start"
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-400
-                         text-white font-medium hover:scale-105 transition-transform
-                         shadow-lg hover:shadow-xl"
+              className="px-6 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500
+                         text-white font-medium hover:shadow-lg hover:scale-105 transition-all"
             >
               🚀 快速开始
             </Link>
             <Link
               href="/docs/installation"
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-violet-400 to-pink-400
-                         text-white font-medium hover:scale-105 transition-transform
-                         shadow-lg hover:shadow-xl"
+              className="px-6 py-2 rounded-xl bg-white/80 dark:bg-white/10
+                         text-gray-800 dark:text-white font-medium
+                         border border-black/10 dark:border-white/20
+                         hover:shadow-lg hover:scale-105 transition-all"
             >
               ⚙️ 安装配置
             </Link>
-            <Link
-              href="/docs/basic-concepts"
-              className="px-6 py-3 rounded-xl bg-gradient-to-r from-pink-400 to-cyan-400
-                         text-white font-medium hover:scale-105 transition-transform
-                         shadow-lg hover:shadow-xl"
-            >
-              📚 基础概念
-            </Link>
           </div>
         </MotionDiv>
-      </main>
 
-      <Footer />
+        <div className="h-20" />
+      </main>
     </div>
   );
-}
-
-function getDocBySlugSafe(slug: string) {
-  // 延迟导入避免 SSR 问题
-  try {
-    const { docs } = require("../../data/docs");
-    return docs[slug];
-  } catch {
-    return null;
-  }
 }

@@ -7,7 +7,7 @@ import { ThemeProvider } from "next-themes";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Background from "../components/Background";
+import GlobalBackground from "../components/GlobalBackground";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -22,28 +22,31 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           name="description"
           content="SnowyMC 官方网站，Minecraft 插件与像素美术创作。"
         />
-          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
       </Head>
 
+      {/* 全局背景 - 固定，不随页面切换而重绘 */}
+      <GlobalBackground />
+
+      {/* 页面过渡动画 */}
       <AnimatePresence mode="wait">
         <motion.div
           key={router.asPath}
-          initial={{ opacity: 0, y: 30, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -30, scale: 0.98 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
         >
-          {/* 全局容器 */}
-          <div className="relative min-h-screen overflow-hidden text-black dark:text-white">
-            {/* 全局动态渐变 + 光晕背景 */}
-            <Background />
-
-            {/* 全局布局 */}
-            <Navbar />
-            <Component {...pageProps} />
-          </div>
+          {/* 固定导航栏 */}
+          <Navbar />
+          
+          {/* 页面内容 */}
+          <Component {...pageProps} />
+          
+          {/* 页脚 */}
+          <Footer />
         </motion.div>
       </AnimatePresence>
     </ThemeProvider>
   );
-          }
+}

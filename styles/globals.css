@@ -2,115 +2,97 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ================= 全局样式 ================= */
+/* ==================== 全局样式 ==================== */
 
-html, body, #__next { height: 100%; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-html {
-  scroll-behavior: smooth;
-  overflow-y: scroll;
-}
-
 /* 选择态 */
-:root {
-  --sel-bg: rgba(0, 0, 0, 0.08);
-  --sel-fg: #000;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-               Roboto, "Helvetica Neue", Arial, Inter, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
-}
-.dark :root {
-  --sel-bg: rgba(255, 255, 255, 0.12);
-  --sel-fg: #fff;
-}
 ::selection {
-  background: var(--sel-bg);
-  color: var(--sel-fg);
+  background: rgba(34, 211, 238, 0.3);
+  color: inherit;
 }
 
-/* 字体栈 */
-html, body { font-family: var(--font-sans); }
+/* ==================== 滚动条美化 ==================== */
 
-/* 内容表面（轻薄玻璃） */
-.content-surface {
-  backdrop-filter: saturate(130%) contrast(105%) blur(1px);
-  -webkit-backdrop-filter: saturate(130%) contrast(105%) blur(1px);
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* ================= 组件：Timeline ================= */
-@layer components {
-  .timeline-card {
-    @apply rounded-2xl px-6 py-4 border transition-transform duration-150;
-    background-color: rgba(255, 255, 255, 0.85);
-    border-color: rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .dark .timeline-card {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.08);
-  }
-  .timeline-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  .timeline-title {
-    @apply font-semibold tracking-tight;
-    color: #111827;
-  }
-  .dark .timeline-title { color: #ffffff; }
-
-  .timeline-desc {
-    @apply mt-1 leading-relaxed;
-    color: #374151;
-  }
-  .dark .timeline-desc { color: #d1d5db; }
-
-  .timeline-node {
-    @apply rounded-full border;
-    width: 0.75rem;
-    height: 0.75rem;
-    background-color: #ffffff;
-    border-color: rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-  }
-  @media (min-width: 768px) {
-    .timeline-node { width: 0.875rem; height: 0.875rem; }
-  }
-  .dark .timeline-node {
-    background-color: #1a1d1f;
-    border-color: rgba(255, 255, 255, 0.15);
-  }
-
-  .timeline-node-inner {
-    position: absolute;
-    inset: 3px;
-    border-radius: 9999px;
-    background-image: linear-gradient(to bottom, #e5e7eb, #d1d5db);
-  }
-  @media (min-width: 768px) {
-    .timeline-node-inner { inset: 4px; }
-  }
-  .dark .timeline-node-inner {
-    background-image: linear-gradient(to bottom, #27292b, #313336);
-  }
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-/* ================= 通用工具类 ================= */
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ==================== 动画 ==================== */
+
+/* 淡入效果 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 通用工具类 */
 .ease-smooth {
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* 移动端优化 */
+/* ==================== 玻璃态效果 ==================== */
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ==================== 移动端优化 ==================== */
+
 @media (max-width: 768px) {
-  /* 减少移动端模糊效果 */
+  /* 减少模糊效果提升性能 */
   .blur-xl { filter: blur(12px); }
   .blur-2xl { filter: blur(24px); }
   .blur-3xl { filter: blur(40px); }
+  
+  /* 减少动画避免卡顿 */
+  * {
+    animation-duration: 0.5s !important;
+    transition-duration: 0.3s !important;
+  }
+}
+
+/* ==================== 文字渐变 ==================== */
+
+.text-gradient {
+  background: linear-gradient(to right, #22d3ee, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
