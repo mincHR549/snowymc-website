@@ -2,6 +2,7 @@
 "use client";
 
 import Head from "next/head";
+import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { MotionDiv, MotionH2, MotionP } from "../components/motion-safe";
@@ -153,10 +154,8 @@ export default function Projects() {
               </div>
 
               {/* 链接 */}
-              <a
+              <Link
                 href={p.link}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="mt-5 inline-block text-sm font-medium relative
                            text-gray-800 dark:text-white
                            px-3 py-1 rounded-md
@@ -168,7 +167,7 @@ export default function Projects() {
                            hover:shadow-[0_0_18px_rgba(34,211,238,0.35)]"
               >
                 了解更多
-              </a>
+              </Link>
 
               {/* 底部渐变条 */}
               <div
