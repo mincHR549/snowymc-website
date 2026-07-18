@@ -145,15 +145,17 @@ export default function Home() {
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </span>
           </Link>
-          <Link
-            href="/docs"
+          <a
+            href="https://wiki.snowymc.top/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-10 py-4 rounded-2xl bg-white/80 dark:bg-white/10 backdrop-blur-sm
                        text-gray-800 dark:text-white font-bold border border-black/10 dark:border-white/20
                        hover:shadow-xl hover:-translate-y-1 hover:border-cyan-400/50
                        transition-all duration-500"
           >
             阅读文档
-          </Link>
+          </a>
         </div>
 
         <div className="h-24" />

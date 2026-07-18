@@ -16,7 +16,7 @@ export default function Navbar() {
     { href: "/about", label: "关于", icon: "👥" },
     { href: "/projects", label: "项目", icon: "📦" },
     { href: "/gallery", label: "美术", icon: "🎨" },
-    { href: "/docs", label: "文档", icon: "📚" },
+    { href: "https://wiki.snowymc.top/", label: "文档", icon: "📚", external: true },
     { href: "/contact", label: "联系", icon: "📧" },
   ];
 
@@ -46,7 +46,20 @@ export default function Navbar() {
             {/* 桌面导航 */}
             <div className="hidden lg:flex items-center gap-5">
               {navLinks.map((link) => {
-                const isActive = router.pathname === link.href;
+                const isActive = !link.external && router.pathname === link.href;
+                if (link.external) {
+                  return (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative text-sm transition-all text-black/80 hover:text-black dark:text-white/80 dark:hover:text-white"
+                    >
+                      <span className="relative">{link.label}</span>
+                    </a>
+                  );
+                }
                 return (
                   <Link
                     key={link.href}
@@ -79,7 +92,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* 移动端菜单 - 论坛高亮显示 */}
+        {/* 移动端菜单 */}
         {menuOpen && (
           <div className="lg:hidden mt-2 mx-2">
             <div className="rounded-2xl overflow-hidden
@@ -88,7 +101,21 @@ export default function Navbar() {
                             shadow-lg max-h-[70vh] overflow-y-auto">
               <div className="flex flex-col gap-1 p-4">
                 {navLinks.map((link) => {
-                  const isActive = router.pathname === link.href;
+                  const isActive = !link.external && router.pathname === link.href;
+                  if (link.external) {
+                    return (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base transition-all text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5`}
+                      >
+                        <span>{link.icon}</span>
+                        <span>{link.label}</span>
+                      </a>
+                    );
+                  }
                   return (
                     <Link
                       key={link.href}

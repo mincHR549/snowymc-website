@@ -33,17 +33,32 @@ export default function Footer() {
             { href: "/about", label: "关于" },
             { href: "/projects", label: "项目" },
             { href: "/gallery", label: "美术" },
-            { href: "/docs", label: "文档" },
+            { href: "https://wiki.snowymc.top/", label: "文档", external: true },
             { href: "/contact", label: "联系" },
-          ].map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-gray-600 dark:text-white/60 hover:text-cyan-500 transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
+          ].map((link) => {
+            if (link.external) {
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 dark:text-white/60 hover:text-cyan-500 transition-colors"
+                >
+                  {link.label}
+                </a>
+              );
+            }
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-gray-600 dark:text-white/60 hover:text-cyan-500 transition-colors"
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
 
         {/* 渐变分隔线 */}
